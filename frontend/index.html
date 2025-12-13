@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Quantum Vidya — Landing</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-top:#cfeff3; --bg-bottom:#bfe6ea;
+    --teal:#0fb2be; --teal-2:#17d0da; --gold:#ffb03b;
+    --text-dark:#05292a;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:"Inter",system-ui,Arial;display:flex;align-items:center;justify-content:center;background:
+    radial-gradient(800px 260px at 12% 14%, rgba(15,178,190,0.05), transparent 8%),
+    radial-gradient(700px 260px at 88% 86%, rgba(255,176,59,0.04), transparent 8%),
+    linear-gradient(180deg,var(--bg-top),var(--bg-bottom)); color:var(--text-dark); -webkit-font-smoothing:antialiased;}
+
+  .top-cta{position:absolute;top:18px;right:18px;z-index:200}
+  .btn{ background: linear-gradient(135deg,var(--teal),var(--teal-2)); color:#042226; padding:10px 16px;border-radius:999px;border:0;font-weight:800; cursor:pointer; box-shadow:0 10px 24px rgba(3,12,18,0.08); }
+  .hero{ width:100%; max-width:1200px; padding:clamp(18px,6vh,54px); text-align:center; position:relative; z-index:20; }
+  .bg-glow{ position:absolute; left:50%; top:48%; transform:translate(-50%,-50%); width:1000px; height:520px; pointer-events:none; z-index:10;
+    background: radial-gradient(36% 32% at 22% 32%, rgba(15,178,190,0.14), transparent 16%), radial-gradient(42% 36% at 78% 72%, rgba(255,176,59,0.12), transparent 16%), radial-gradient(54% 48% at 50% 50%, rgba(12,24,30,0.06), transparent 40%); filter: blur(34px) saturate(115%); animation: drift 20s linear infinite; }
+  @keyframes drift{0%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-52%,-48%) scale(1.02)}100%{transform:translate(-50%,-50%) scale(1)}}
+
+  .orbit-wrap{ position:absolute; left:50%; top:46%; transform:translate(-50%,-50%); width:min(520px,82%); height:min(320px,48%); pointer-events:none; z-index:40; opacity:0; transition:opacity .45s ease; }
+  .orbit-wrap.visible{ opacity:1; }
+
+  .headline{ display:flex; gap:18px; align-items:center; justify-content:center; flex-wrap:wrap; position:relative; z-index:60; }
+  .word{ position:relative; display:inline-block; font-weight:900; line-height:0.9; letter-spacing:-1px; font-size:clamp(56px,10vw,120px); min-width:max-content; color:var(--text-dark); filter: drop-shadow(0 8px 20px rgba(0,0,0,0.06)); opacity:0; }
+  .word::before{ content: attr(data-word); position:absolute; left:0; top:0; color: transparent; -webkit-text-stroke: 2.5px rgba(3,18,20,0.12); z-index:-1; }
+  .from-left{ transform:translateX(-120%); animation: slideInLeft 0.95s cubic-bezier(.2,.9,.2,1) forwards; }
+  .from-right{ transform:translateX(120%); animation: slideInRight 0.95s cubic-bezier(.2,.9,.2,1) forwards; }
+  .quantum.from-left{ animation-delay:0.12s } .vidya.from-right{ animation-delay:0.42s }
+  @keyframes slideInLeft{0%{transform:translateX(-120%) scale(.98);opacity:0}60%{transform:translateX(6%) scale(1.005);opacity:1}100%{transform:translateX(0) scale(1);opacity:1}}
+  @keyframes slideInRight{0%{transform:translateX(120%) scale(.98);opacity:0}60%{transform:translateX(-6%) scale(1.005);opacity:1}100%{transform:translateX(0) scale(1);opacity:1}}
+
+  .breath{ animation: floatY 3s ease-in-out infinite; } @keyframes floatY{0%{transform:translateY(0)}50%{transform:translateY(-3px)}100%{transform:translateY(0)}}
+
+  .particles{ position:absolute; left:50%; top:48%; transform:translate(-50%,-50%); width:420px; height:280px; pointer-events:none; z-index:80 }
+  .particle{ position:absolute; border-radius:50%; width:8px; height:8px; opacity:0; transform:translate(-50%,-50%); will-change:transform,opacity; box-shadow:0 6px 14px rgba(0,0,0,0.06) }
+
+  .tagline{ margin-top:18px; font-weight:800; letter-spacing:1px; color: rgba(3,18,20,0.92); font-size:clamp(16px,2.2vw,20px); position:relative; display:inline-block }
+  .tagline::after{ content:''; position:absolute; left:50%; bottom:-8px; transform:translateX(-50%); height:4px; width:0; background: linear-gradient(90deg,var(--teal),var(--teal-2)); border-radius:999px; opacity:0.95; animation: underlineIn 2.6s ease-in-out infinite; }
+  @keyframes underlineIn{ 0%{ width:0; opacity:0 }10%{ width:14%; opacity:1 }40%{ width:56%; opacity:1 }70%{ width:14%; opacity:1 }100%{ width:0; opacity:0 } }
+
+  /* small responsive tweak */
+  @media (max-width:900px){ .orbit-wrap{display:none} .particles{width:320px;height:220px} .word{font-size:clamp(44px,12vw,92px)} .btn{padding:8px 12px} }
+</style>
+</head>
+<body>
+  <div class="top-cta"><button class="btn" id="getStarted">GET STARTED</button></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <div class="orbit-wrap" id="orbitWrap" aria-hidden="true">
+    <svg viewBox="0 0 800 480" class="orbit" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <g transform="translate(400,240)">
+        <ellipse cx="0" cy="0" rx="180" ry="96" fill="none" stroke="rgba(5,41,41,0.14)" stroke-width="3" stroke-dasharray="6 8"></ellipse>
+        <ellipse cx="0" cy="0" rx="140" ry="78" fill="none" stroke="rgba(15,178,190,0.20)" stroke-width="3.2" stroke-linecap="round"></ellipse>
+        <ellipse cx="0" cy="0" rx="220" ry="120" fill="none" stroke="rgba(255,176,59,0.12)" stroke-width="2" stroke-dasharray="4 10"></ellipse>
+      </g>
+    </svg>
+  </div>
+
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <main class="hero" role="main" aria-labelledby="hero-heading">
+    <div class="headline">
+      <div class="word quantum from-left" id="quantum" data-word="Quantum">Quantum</div>
+      <div class="word vidya from-right" id="vidya" data-word="Vidya">Vidya</div>
+    </div>
+
+    <div class="tagline" id="hero-heading">Learn · Evolve · Lead</div>
+  </main>
+
+<script>
+  (function addSpins(){
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes spinA{ from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+      @keyframes spinB{ from{transform:rotate(360deg)} to{transform:rotate(0deg)} }
+      @keyframes spinC{ from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+      svg .orbit ellipse:nth-child(1){ transform-origin:400px 240px; animation:spinA 16s linear infinite; }
+      svg .orbit ellipse:nth-child(2){ transform-origin:400px 240px; animation:spinB 9.6s linear infinite; }
+      svg .orbit ellipse:nth-child(3){ transform-origin:400px 240px; animation:spinC 22s linear infinite; }
+    `;
+    document.head.appendChild(style);
+  })();
+
+  function spawnParticles(container, n=20) {
+    const colors = ['rgba(3,18,20,0.92)','rgba(15,178,190,0.9)','rgba(255,176,59,0.88)'];
+    for (let i=0;i<n;i++){
+      const el = document.createElement('div');
+      el.className = 'particle';
+      el.style.background = colors[i%colors.length];
+      const cx = 50 + (Math.random()-0.5)*6;
+      const cy = 50 + (Math.random()-0.5)*6;
+      el.style.left = cx + '%'; el.style.top = cy + '%'; el.style.width = (6 + Math.random()*10) + 'px'; el.style.height = el.style.width;
+      container.appendChild(el);
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 40 + Math.random()*140;
+      const dx = Math.cos(angle) * dist; const dy = Math.sin(angle) * dist * 0.6; const dur = 700 + Math.random()*900;
+      setTimeout(()=> el.animate([{ transform: 'translate(0,0) scale(.6)', opacity: 1 }, { transform: translate(${dx}px, ${dy}px) scale(1), opacity: 0.06 }], { duration: dur, easing: 'cubic-bezier(.2,.9,.2,1)', fill: 'forwards' }), Math.random()*120);
+      setTimeout(()=> { try{ el.remove(); } catch(e){} }, 2600 + dur);
+    }
+  }
+
+  window.addEventListener('load', ()=>{
+    const quantum = document.getElementById('quantum');
+    const vidya = document.getElementById('vidya');
+    const orbitWrap = document.getElementById('orbitWrap');
+    const particles = document.getElementById('particles');
+    const getStartedBtn = document.getElementById('getStarted');
+
+    setTimeout(()=> {
+      quantum.style.opacity = '1'; vidya.style.opacity = '1';
+      quantum.classList.add('breath'); vidya.classList.add('breath');
+      orbitWrap.classList.add('visible');
+      spawnParticles(particles, 20); setTimeout(()=> spawnParticles(particles, 10), 700);
+
+      // navigate to second page when clicked
+      getStartedBtn.addEventListener('click', ()=> {
+        // simple transition: navigate
+        window.location.href = 'getstarted.html';
+      });
+    }, 850);
+  });
+</script>
+</body>
+</html>
