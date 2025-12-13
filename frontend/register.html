@@ -153,6 +153,22 @@
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
 </head>
+<script>
+  // Global navigation handler (SAFE & CORRECT)
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("[data-nav]").forEach(el => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        const target = el.getAttribute("data-nav");
+        if (target) {
+          window.location.href = target;
+        }
+      });
+    });
+  });
+</script>
+
+
 <body>
   <div class="wrap" id="root">
     <!-- Header (landmark + simple nav) -->
@@ -169,11 +185,15 @@
         </div>
       </div>
 
-      <nav class="primary" role="navigation" aria-label="Primary navigation">
-  <a class="pill btn-ghost" href="#" aria-current="page">Home</a>
-  <a class="pill btn-ghost" href="#" id="logBtn">Log</a> 
-  <button class="pill btn-primary" id="open-login">Login</button>
+     <nav class="primary" role="navigation" aria-label="Primary navigation">
+  <a class="pill btn-ghost" href="#" data-nav="landing.html" aria-current="page">Home</a>
+  <a class="pill btn-ghost" href="#" data-nav="log.html" id="logBtn">Log</a> 
+ <button class="pill btn-primary" id="open-login">
+  Login
+</button>
+
 </nav>
+
     </header>
 
     <!-- Main: left signup, right marketing -->
@@ -194,7 +214,17 @@
             <!-- Email -->
             <div class="field">
               <label for="email">Email</label>
-              <input id="email" name="email" class="control" type="email" inputmode="email" placeholder="you@college.edu" required aria-required="true" />
+              <input 
+  id="email"
+  name="email"
+  class="control"
+  type="email"
+  placeholder="you@gmail.com"
+  required
+  pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
+  title="Please enter a valid Gmail address"
+>
+
             </div>
 
             <!-- Age + Study -->
@@ -230,10 +260,16 @@
             <!-- Actions -->
             <div class="actions">
               <button type="button" class="btn-ghost-light" id="clearBtn">Clear</button>
-              <button type="submit" class="pill btn-primary" id="submitBtn">Sign up</button>
+            <button type="button" class="pill btn-primary" id="submitBtn" data-nav="HOME.html">
+  Signup
+</button>
+
+
+
             </div>
 
-            <div class="muted" style="margin-top:12px;">Already have an account? <a href="#" class="small-link" id="login-link">Login</a></div>
+            <div class="muted" style="margin-top:12px;">Already have an account? <a href="#" class="small-link" id="login-link" data-nav="login.html">Login</a>
+</div>
 
             <div id="formMsg" aria-live="polite" style="margin-top:12px"></div>
           </form>
@@ -248,7 +284,10 @@
             <p>Guided modules, adaptive quizzes and analytics for students and mentors — learn smarter, track progress and lead confidently.</p>
 
            <div class="cta-row">
-  <button class="pill btn-primary" id="ctaLearn" aria-haspopup="dialog">Learn more</button>
+ <button class="pill btn-primary" id="ctaLearn" data-nav="elibrary.html" aria-haspopup="dialog">
+  Learn more
+</button>
+
 </div>
             <!-- Pill badges -->
             <div class="badges" role="list" aria-hidden="false">
@@ -366,12 +405,18 @@
   }
 
   // Form submit (demo): validate & store in localStorage (client-only demo)
-  form.addEventListener('submit', (e) => {
+ form.addEventListener('submit', (e) => {
+
     e.preventDefault();
     // Basic validation
     if (!full.value.trim() || !email.value.trim() || !password.value || !agree.checked) {
       showMessage({ type:'err', text:'Please complete required fields and accept terms.' });
       return;
+      if (!email.value.endsWith('@gmail.com')) {
+  showMessage({ type: 'err', text: 'Only Gmail addresses are allowed.' });
+  return;
+}
+
     }
     try {
       const users = JSON.parse(localStorage.getItem('qv_users') || '[]');
@@ -382,7 +427,7 @@
       }
       users.push({ name: full.value.trim(), email: email.value.trim() });
       localStorage.setItem('qv_users', JSON.stringify(users));
-      showMessage({ type:'ok', text: Welcome, ${full.value.trim()} — account created (demo). Redirecting... });
+      showMessage({ type:'ok', text: `Welcome, ${full.value.trim()} — account created (demo). Redirecting...` });
       // simulate redirect (demo)
       setTimeout(() => window.location.href='/', 900);
     } catch(err) {
@@ -421,7 +466,24 @@
   openLoginBtn.addEventListener('click', openLogin);
   loginLink.addEventListener('click', (ev)=>{ ev.preventDefault(); openLogin(); });
   cancelLogin.addEventListener('click', closeLogin);
-  doLogin.addEventListener('click', ()=>{ alert('Demo login — implement server auth'); closeLogin(); });
+ doLogin.addEventListener('click', () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value.trim();
+
+  if (!email || !pass) {
+    alert('Please enter email and password');
+    return;
+  }
+
+  if (!email.endsWith('@gmail.com')) {
+    alert('Only Gmail accounts are allowed');
+    return;
+  }
+
+  // Demo success
+  closeLogin();
+  window.location.href = 'HOME.html';
+});
 
   // Log button demo: show recent signups (reads from localStorage)
   logBtn.addEventListener('click', (ev) => {
@@ -431,7 +493,7 @@
       showMessage({ type:'ok', text: 'No signups yet (demo).' });
       return;
     }
-    const list = users.map(u => ${u.name} — ${u.email}).join('\\n');
+    const list = users.map(u => `${u.name} — ${u.email}`).join('\\n');
     // simple navigator clipboard + alert fallback (non-blocking)
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(list).then(()=> {
@@ -472,7 +534,7 @@
       const dy = - (80 + Math.random()*180);
       d.animate([
         { transform:'translate(0,0) rotate(0deg)', opacity:1 },
-        { transform:translate(${dx}px, ${dy}px) rotate(${Math.random()*360}deg), opacity:0 }
+        { transform:`translate(${dx}px, ${dy}px) rotate(${Math.random()*360}deg)`, opacity:0 }
       ], { duration: 900 + Math.random()*600, easing:'cubic-bezier(.2,.9,.2,1)'});
       setTimeout(()=> d.remove(), 1600);
     }
@@ -489,7 +551,7 @@
       const r = scene.getBoundingClientRect();
       const dx = (ev.clientX - (r.left + r.width/2)) / r.width;
       const dy = (ev.clientY - (r.top + r.height/2)) / r.height;
-      scene.style.transform = translate3d(${dx*6}px,${dy*6}px,0);
+      scene.style.transform = `translate3d(${dx*6}px,${dy*6}px,0)`;
       clearTimeout(last);
       last = setTimeout(()=> scene.style.transform = '', 120);
     });
@@ -505,3 +567,4 @@
 </script>
 </body>
 </html>
+
