@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Textbooks | Quantum Vidya</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#f6fcfb;
+  --card:#ffffff;
+  --teal:#00b3b6;
+  --dark:#053433;
+  --muted:#637f7f;
+  --radius:18px;
+  font-family:Inter,system-ui;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--dark);
+}
+
+/* HEADER */
+header{
+  background:#fff;
+  padding:16px 20px;
+  box-shadow:0 4px 14px rgba(0,0,0,.05);
+}
+.brand{font-weight:800}
+nav{float:right}
+nav a{
+  margin-left:18px;
+  text-decoration:none;
+  font-weight:600;
+  color:#08605f;
+}
+
+/* LAYOUT */
+.container{
+  max-width:1100px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+h1{margin-bottom:6px}
+.subtitle{color:var(--muted);margin-bottom:30px}
+
+/* FORM */
+.form-card{
+  background:var(--card);
+  padding:28px;
+  border-radius:var(--radius);
+  box-shadow:0 20px 40px rgba(0,0,0,.08);
+}
+
+label{
+  font-weight:700;
+  display:block;
+  margin-top:18px;
+}
+
+input, select, textarea{
+  width:100%;
+  margin-top:6px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #d6eeee;
+  font-family:inherit;
+}
+
+textarea{
+  min-height:140px;
+  resize:vertical;
+}
+
+button{
+  margin-top:24px;
+  padding:14px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--teal),#66e4df);
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+}
+
+/* OUTPUT */
+.output{
+  margin-top:30px;
+  background:#f1ffff;
+  padding:24px;
+  border-radius:16px;
+  border:1px dashed #bfeeee;
+}
+
+.back{
+  margin-top:20px;
+  display:inline-block;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <span class="brand">Quantum Vidya</span>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="elibrary.html">Library</a>
+    <a href="exams.html">Exams</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <h1>Academic Textbook Generator</h1>
+  <p class="subtitle">
+    Generate full-length university-standard textbooks using AI.
+  </p>
+
+  <!-- INPUT FORM -->
+  <div class="form-card">
+
+    <label>Course Level</label>
+    <select>
+      <option>School</option>
+      <option>Intermediate</option>
+      <option>UG</option>
+      <option>PG</option>
+    </select>
+
+    <label>Course Name</label>
+    <input placeholder="e.g., BTech Computer Science Engineering">
+
+    <label>Subject</label>
+    <input placeholder="e.g., Database Management Systems">
+
+    <label>Textbook Generation Rules</label>
+    <textarea readonly>
+- This must be a FULL TEXTBOOK, not notes
+- Include ALL important chapters
+- Each chapter must include:
+  - Clear explanation
+  - Definitions
+  - Examples where applicable
+- Use simple, student-friendly language
+- Structure like a real university textbook
+- No Q&A format
+- No summaries only
+- No bullet-only content
+- Write in paragraph form with headings
+    </textarea>
+
+    <button>Generate Full Textbook</button>
+
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="output">
+    <strong>Generated Textbook Output (Demo)</strong>
+    <p>
+      Title: Database Management Systems<br><br>
+      Chapter 1: Introduction to Databases<br>
+      A database is an organized collection of related data...
+    </p>
+  </div>
+
+  <a href="elibrary.html" class="back">← Back to Library</a>
+
+</div>
+
+</body>
+</html>

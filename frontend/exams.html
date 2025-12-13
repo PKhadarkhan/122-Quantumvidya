@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Exams | Quantum Vidya</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#f6fcfb;
+  --card:#ffffff;
+  --teal:#00b3b6;
+  --dark:#053433;
+  --muted:#637f7f;
+  font-family:Inter,system-ui;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--dark);
+}
+
+/* Header */
+header{
+  background:#fff;
+  padding:16px 20px;
+  box-shadow:0 4px 14px rgba(0,0,0,.05);
+}
+.brand{font-weight:800}
+nav{float:right}
+nav a{
+  margin-left:18px;
+  text-decoration:none;
+  font-weight:600;
+  color:#08605f;
+}
+
+/* Layout */
+.container{
+  max-width:1200px;
+  margin:40px auto;
+  padding:0 20px;
+}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:22px;
+}
+.card{
+  background:var(--card);
+  padding:26px;
+  border-radius:18px;
+  box-shadow:0 20px 40px rgba(0,0,0,.08);
+  transition:.25s ease;
+}
+.card:hover{
+  transform:translateY(-6px);
+}
+.card h3{margin-top:0}
+.btn{
+  margin-top:12px;
+  display:inline-block;
+  padding:10px 18px;
+  background:var(--teal);
+  color:#fff;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:700;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <span class="brand">Quantum Vidya</span>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="elibrary.html">Library</a>
+    <a href="exams.html">Exams</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h2>Exams & Assessments</h2>
+  <p style="color:var(--muted)">
+    Practice, evaluate, and improve with AI-powered examinations.
+  </p>
+
+  <div class="cards">
+
+    <div class="card">
+      <h3>AI Mock Exams</h3>
+      <p>Full-length exams generated based on syllabus & difficulty.</p>
+      <a class="btn" href="#">Start Exam</a>
+    </div>
+
+    <div class="card">
+      <h3>Topic-wise Tests</h3>
+      <p>Short quizzes to test individual concepts.</p>
+      <a class="btn" href="#">Take Test</a>
+    </div>
+
+    <div class="card">
+      <h3>Timed Quizzes</h3>
+      <p>Speed-based quizzes with instant evaluation.</p>
+      <a class="btn" href="#">Attempt Quiz</a>
+    </div>
+
+    <div class="card">
+      <h3>Exam Analytics</h3>
+      <p>Performance analysis, weak areas & score trends.</p>
+      <a class="btn" href="#">View Analytics</a>
+    </div>
+
+  </div>
+
+  <br>
+  <a href="elibrary.html">← Back to Library</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Quantum Vidya | Smart E-Library</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#f6fcfb;
+  --card:#ffffff;
+  --teal-900:#053433;
+  --teal-700:#08605f;
+  --teal-500:#00b3b6;
+  --teal-300:#66e4df;
+  --muted:#637f7f;
+  --radius:18px;
+  --shadow:0 26px 60px rgba(3,18,18,.08);
+  font-family:Inter,system-ui;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--teal-900)}
+
+header{background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.header-inner{
+  max-width:1200px;margin:auto;padding:16px 20px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.logo{
+  width:42px;height:42px;border-radius:12px;
+  background:linear-gradient(135deg,var(--teal-500),var(--teal-300));
+  display:flex;align-items:center;justify-content:center;
+}
+nav a{margin-left:18px;text-decoration:none;font-weight:700;color:var(--teal-700)}
+.nav-active{
+  padding:8px 14px;border-radius:999px;
+  background:linear-gradient(90deg,var(--teal-500),var(--teal-300));
+  color:#042226;
+}
+
+.page-head{
+  max-width:1200px;margin:50px auto 30px;padding:0 20px;
+}
+.page-head h1{font-size:38px}
+.page-head p{color:var(--muted)}
+
+.search-box{margin-top:20px;position:relative}
+.search-box input{
+  width:100%;padding:14px 18px;border-radius:999px;
+  border:1px solid #dceeee;
+}
+.ai-pill{
+  position:absolute;right:16px;top:50%;
+  transform:translateY(-50%);
+  background:var(--teal-500);color:#fff;
+  padding:4px 12px;border-radius:999px;font-weight:700;
+}
+
+/* ===== FEATURE GRID (FIXED) ===== */
+.feature-nav{
+  max-width:1200px;
+  margin:30px auto 60px;
+  padding:0 20px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:24px;
+  align-items:stretch;
+}
+
+.feature-card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:24px;
+  text-decoration:none;
+  color:var(--teal-900);
+  box-shadow:var(--shadow);
+  transition:.25s;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:170px;
+}
+.feature-card:hover{transform:translateY(-8px)}
+
+.feature-card .icon{font-size:28px}
+.feature-card p{color:var(--muted);font-size:14px}
+
+.feature-card.ai{
+  background:linear-gradient(135deg,#e8fbfc,#f3ffff);
+  border:1.5px solid var(--teal-500);
+}
+
+/* Responsive */
+@media(max-width:1000px){
+  .feature-nav{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:700px){
+  .feature-nav{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:480px){
+  .feature-nav{grid-template-columns:1fr;}
+}
+
+footer{text-align:center;padding:26px;color:var(--muted)}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand"><div class="logo">QV</div>Quantum Vidya</div>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="elibrary.html" class="nav-active">Library</a>
+      <a href="exams.html">Exams</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <h1>Smart E-Library</h1>
+  <p>Organized, searchable, and AI-assisted academic resources.</p>
+
+  <div class="search-box">
+    <input placeholder="Search courses, textbooks, papers…">
+    <span class="ai-pill">AI</span>
+  </div>
+</section>
+
+<!-- ===== FEATURE CARDS ===== -->
+<section class="feature-nav">
+
+  <a href="courses.html" class="feature-card">
+    <span class="icon">📘</span>
+    <h3>Courses</h3>
+    <p>Structured AI-powered courses</p>
+  </a>
+
+  <a href="textbooks.html" class="feature-card">
+    <span class="icon">📚</span>
+    <h3>Textbooks</h3>
+    <p>PDFs & eBooks</p>
+  </a>
+
+  <a href="pyqs.html" class="feature-card">
+    <span class="icon">📝</span>
+    <h3>PYQs</h3>
+    <p>Previous year question papers</p>
+  </a>
+
+  <a href="ai-notes.html" class="feature-card ai">
+    <span class="icon">🤖</span>
+    <h3>AI Exam Notes</h3>
+    <p>AI-generated exam-ready notes</p>
+  </a>
+
+  <a href="exams.html" class="feature-card">
+    <span class="icon">🧠</span>
+    <h3>Exams</h3>
+    <p>AI-based tests & evaluations</p>
+  </a>
+
+</section>
+
+<footer>© 2025 Quantum Vidya · Learn · Evolve · Lead</footer>
+
+</body>
+</html>
