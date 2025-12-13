@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Quantum Vidya — Register</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ========================
+     Design tokens & resets
+     ======================== */
+  :root{
+    /* Palette */
+    --bg-1: #f6fcfb;
+    --bg-2: #eef8f7;
+    --teal-900: #053433;
+    --teal-700: #08605f;
+    --teal-500: #00b3b6;
+    --teal-300: #66e4df;
+    --warm: #ff9f3c;
+    --muted: #637f7f;
+
+    /* Layout */
+    --max-width: 1180px;
+    --gap: 20px;
+    --radius: 14px;
+
+    /* Elevation / focus */
+    --shadow-lg: 0 26px 70px rgba(4,26,26,0.08);
+    --focus-ring: 4px solid rgba(0,179,182,0.12);
+
+    /* Typography */
+    --ui-font: "Inter", system-ui, Arial, sans-serif;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:var(--ui-font);-webkit-font-smoothing:antialiased;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));color:var(--teal-700)}
+  img{max-width:100%;height:auto;display:block}
+  a{color:inherit}
+  button{font-family:inherit}
+
+  /* ========================
+     Container & header
+     ======================== */
+  .wrap{max-width:var(--max-width);margin:20px auto;padding:18px}
+  header.site-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{
+    width:56px;height:56px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--teal-500),var(--teal-300));
+    color:#042226;font-weight:800;
+    overflow:hidden;
+  }
+  .logo img{width:100%;height:100%;object-fit:cover;display:block}
+  .brand h1{margin:0;font-size:15px;letter-spacing:0.2px}
+  .brand p{margin:0;font-size:12px;color:var(--muted)}
+
+  nav.primary{display:flex;gap:10px;align-items:center}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;font-weight:700;border:0;cursor:pointer}
+  .btn-ghost{background:transparent;color:var(--teal-700)}
+  .btn-primary{background:linear-gradient(90deg,var(--teal-500),var(--teal-300));color:#042226;box-shadow:0 14px 36px rgba(3,22,22,0.08)}
+
+  /* ========================
+     Main layout (responsive)
+     ======================== */
+  .main-grid{display:grid;grid-template-columns:1fr;gap:var(--gap);align-items:start}
+  @media(min-width:980px){
+    .main-grid{grid-template-columns:420px 1fr}
+  }
+
+  /* ========================
+     Left signup panel
+     ======================== */
+  .card-sign{
+    background:linear-gradient(180deg,#042e2d,#073a38);
+    color:#fff;padding:26px;border-radius:var(--radius);box-shadow:var(--shadow-lg);
+    min-height:460px;display:flex;flex-direction:column;justify-content:center;
+  }
+  .card-sign h2{margin:0 0 8px;font-size:26px;font-weight:800}
+  .lead{margin:0 0 18px;color:rgba(255,255,255,0.9);line-height:1.4}
+
+  /* form fields (reusable styles) */
+  .form{display:flex;flex-direction:column;gap:12px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{font-size:13px;color:rgba(255,255,255,0.96)}
+  .control{
+    padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);
+    background:rgba(255,255,255,0.03);color:#eafafc;font-size:14px;outline:none;
+    transition:box-shadow .12s ease,transform .06s ease;
+  }
+  .control::placeholder{color:rgba(255,255,255,0.22)}
+  .control:focus{box-shadow:var(--focus-ring);transform:translateY(-2px)}
+
+  /* Fix select dropdown text visibility:
+     - ensures options are readable despite dark input styles.
+     - some browsers limit styling for <option>, but color/background are widely applied.
+  */
+  select.control,
+  select.control option {
+    color: var(--teal-900) !important;
+    background: #fff !important;
+  }
+
+  .row{display:flex;gap:12px}
+  .row .field{flex:1}
+
+  .meta{display:flex;align-items:center;gap:10px;margin-top:6px;color:rgba(255,255,255,0.9)}
+  .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px;align-items:center}
+  .btn-ghost-light{background:transparent;border:1px solid rgba(255,255,255,0.08);color:#fff;padding:8px 12px;border-radius:10px}
+
+  .small-link{color:var(--teal-300);font-weight:700}
+
+  /* Accessible small helper text */
+  .muted{font-size:13px;color:rgba(255,255,255,0.75)}
+
+  /* ========================
+     Right marketing panel
+     ======================== */
+  .card-mark{position:relative;border-radius:var(--radius);padding:26px;background:linear-gradient(180deg,#ffffff,#f5fbfb);box-shadow:0 30px 70px rgba(3,18,18,0.06)}
+  .mark-grid{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:center}
+  @media(max-width:1200px){ .mark-grid{grid-template-columns:1fr 320px} }
+  @media(max-width:720px){ .mark-grid{grid-template-columns:1fr} }
+
+  .hero h3{margin:0 0 10px;font-size:28px}
+  .hero p{margin:0 0 16px;color:var(--muted);line-height:1.5}
+
+  .cta-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .cta-row .meta{margin:0}
+
+  /* badges list (pill-shaped tags) */
+  .badges{display:flex;flex-direction:column;gap:10px}
+  .badge{
+    display:inline-flex;align-items:center;gap:10px;background:white;padding:10px 14px;border-radius:12px;box-shadow:0 12px 30px rgba(3,18,18,0.04);min-width:160px;font-weight:700;color:var(--teal-700)
+  }
+  .dot{width:12px;height:12px;border-radius:50%}
+
+  /* scene card - keep small DOM, accessible description via aria-hidden */
+  .scene{border-radius:12px;background:linear-gradient(180deg,#fff,#f3feff);height:240px;display:flex;align-items:center;justify-content:center;box-shadow:0 26px 60px rgba(4,26,26,0.05);overflow:visible}
+  @media(min-width:980px){ .scene{height:300px} }
+
+  /* small micro-interactions */
+  .scene, .badge{transition:transform .18s ease, box-shadow .18s ease}
+  .scene:hover{transform:translateY(-6px)}
+  .badge:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(3,18,18,0.06)}
+
+  /* messages */
+  .msg{padding:10px 12px;border-radius:10px;font-weight:700}
+  .msg--err{background:#fff1f1;color:#8b1d1d}
+  .msg--ok{background:#f1fff7;color:#0b6b60}
+
+  /* utility */
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
+</head>
+<body>
+  <div class="wrap" id="root">
+    <!-- Header (landmark + simple nav) -->
+    <header class="site-header" role="banner">
+      <div class="brand" aria-label="Quantum Vidya">
+        <!-- Updated logo: uses images/QVLOGO.png first, falls back to file:///E:/... then to QV badge -->
+        <div class="logo" aria-hidden="false">
+          <img id="logoImg" src="images/QVLOGO.png" alt="Quantum Vidya logo">
+        </div>
+
+        <div>
+          <h1>Quantum Vidya</h1>
+          <p>Learn · Evolve · Lead</p>
+        </div>
+      </div>
+
+      <nav class="primary" role="navigation" aria-label="Primary navigation">
+  <a class="pill btn-ghost" href="#" aria-current="page">Home</a>
+  <a class="pill btn-ghost" href="#" id="logBtn">Log</a> 
+  <button class="pill btn-primary" id="open-login">Login</button>
+</nav>
+    </header>
+
+    <!-- Main: left signup, right marketing -->
+    <main class="main-grid" role="main" aria-labelledby="signup-heading">
+      <!-- LEFT: Sign up form card -->
+      <aside class="card-sign" aria-labelledby="signup-heading">
+        <div>
+          <h2 id="signup-heading">Welcome — create your account</h2>
+          <p class="lead">Join Quantum Vidya for personalized learning, progress insights and teacher tools.</p>
+
+          <form id="signupForm" class="form" novalidate>
+            <!-- Full name -->
+            <div class="field">
+              <label for="full">Full name</label>
+              <input id="full" name="full" class="control" type="text" placeholder="Your full name" required aria-required="true" />
+            </div>
+
+            <!-- Email -->
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" class="control" type="email" inputmode="email" placeholder="you@college.edu" required aria-required="true" />
+            </div>
+
+            <!-- Age + Study -->
+            <div class="row" role="group" aria-label="Age and Study">
+              <div class="field">
+                <label for="age">Age</label>
+                <input id="age" name="age" class="control" type="number" min="10" max="120" placeholder="20" />
+              </div>
+              <div class="field">
+                <label for="study">Study</label>
+                <select id="study" name="study" class="control" aria-label="Study or department">
+                  <option value="">Select</option>
+                  <option>Computer Science</option>
+                  <option>Electronics</option>
+                  <option>Mechanical</option>
+                  <option>IT</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="field">
+              <label for="password">Password</label>
+              <input id="password" name="password" class="control" type="password" minlength="6" placeholder="Create password" required aria-required="true" />
+            </div>
+
+            <!-- Terms -->
+            <div class="meta">
+              <input id="agree" name="agree" type="checkbox" aria-required="true" />
+              <label for="agree">I agree to <a href="#" class="small-link">terms & privacy</a></label>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions">
+              <button type="button" class="btn-ghost-light" id="clearBtn">Clear</button>
+              <button type="submit" class="pill btn-primary" id="submitBtn">Sign up</button>
+            </div>
+
+            <div class="muted" style="margin-top:12px;">Already have an account? <a href="#" class="small-link" id="login-link">Login</a></div>
+
+            <div id="formMsg" aria-live="polite" style="margin-top:12px"></div>
+          </form>
+        </div>
+      </aside>
+
+      <!-- RIGHT: Marketing panel -->
+      <section class="card-mark" aria-labelledby="hero-heading">
+        <div class="mark-grid">
+          <div class="hero">
+            <h3 id="hero-heading">Build the skills that matter</h3>
+            <p>Guided modules, adaptive quizzes and analytics for students and mentors — learn smarter, track progress and lead confidently.</p>
+
+           <div class="cta-row">
+  <button class="pill btn-primary" id="ctaLearn" aria-haspopup="dialog">Learn more</button>
+</div>
+            <!-- Pill badges -->
+            <div class="badges" role="list" aria-hidden="false">
+              <div class="badge" role="listitem"><span class="dot" style="background:var(--teal-500)"></span>Adaptive</div>
+              <div class="badge" role="listitem"><span class="dot" style="background:var(--warm)"></span>Insights</div>
+              <div class="badge" role="listitem"><span class="dot" style="background:var(--teal-300)"></span>Teacher tools</div>
+            </div>
+          </div>
+
+          <!-- Scene / illustration (kept simple and accessible) -->
+          <div class="scene" aria-hidden="true" role="img" aria-label="Illustration of teacher with students">
+            <!-- Inline SVG: small DOM, scalable, matches palette -->
+            <svg width="320" height="220" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+              <defs>
+                <linearGradient id="gl" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e9fbfb"/></linearGradient>
+              </defs>
+              <rect x="6" y="6" rx="12" width="308" height="208" fill="url(#gl)" stroke="rgba(3,18,18,0.03)"/>
+              <ellipse cx="170" cy="170" rx="110" ry="20" fill="#eef3f5"/>
+              <!-- teacher -->
+              <g transform="translate(100,86)">
+                <circle cx="0" cy="-10" r="16" fill="#ffd9ba"/>
+                <rect x="-22" y="8" width="44" height="56" rx="8" fill="#06b6b4"/>
+                <rect x="18" y="18" width="48" height="28" rx="6" fill="#fff"/>
+                <rect x="22" y="22" width="40" height="20" rx="4" fill="#ffdca8"/>
+              </g>
+              <!-- students -->
+              <g transform="translate(210,116)">
+                <circle cx="0" cy="-6" r="12" fill="#ffd9ba"/>
+                <rect x="-14" y="6" width="28" height="34" rx="6" fill="#5b7bc1"/>
+              </g>
+              <g transform="translate(252,140)">
+                <circle cx="0" cy="-6" r="12" fill="#ffd9ba"/>
+                <rect x="-12" y="6" width="24" height="30" rx="6" fill="#b56fb4"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- simple footer spacing -->
+    <div style="height:26px"></div>
+  </div>
+
+  <!-- Login modal (lightweight accessible modal) -->
+  <div id="loginModal" role="dialog" aria-modal="true" aria-hidden="true" style="display:none;position:fixed;inset:0;align-items:center;justify-content:center;padding:20px;background:rgba(2,6,8,0.35);z-index:1200">
+    <div style="background:linear-gradient(180deg,#2d3a42,#1b2a30);color:#fff;border-radius:12px;padding:18px;min-width:320px;box-shadow:0 30px 70px rgba(2,6,8,0.5);">
+      <h4 style="margin:0 0 8px">Welcome back</h4>
+      <p style="margin:0 0 12px;color:rgba(255,255,255,0.8)">Sign in to your account</p>
+      <input id="loginEmail" type="email" placeholder="Email" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;background:rgba(255,255,255,0.03);color:#fff">
+      <input id="loginPass" type="password" placeholder="Password" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);margin-bottom:12px;background:rgba(255,255,255,0.03);color:#fff">
+      <div style="display:flex;justify-content:flex-end;gap:8px">
+        <button id="cancelLogin" class="btn-ghost" style="background:transparent;border-radius:8px;padding:8px 12px;color:#fff;border:1px solid rgba(255,255,255,0.06)">Cancel</button>
+        <button id="doLogin" class="pill btn-primary" style="padding:8px 14px">Sign in</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ===============================
+   Lightweight JS: behavior + a11y
+   =============================== */
+
+(function(){
+  // Logo fallback logic:
+  // 1) try images/QVLOGO.png (recommended location)
+  // 2) try file:///E:/QUANTUMVIDYA/QVLOGO.png (user-provided absolute path)
+  // 3) if both fail, render a styled "QV" fallback block (keeps visual consistency)
+  const logoImg = document.getElementById('logoImg');
+  if (logoImg) {
+    logoImg.onerror = function() {
+      // avoid infinite loop if second source also fails
+      this.onerror = null;
+      // try the absolute Windows path the user provided (may be blocked by browser)
+      this.src = 'file:///E:/QUANTUMVIDYA/QVLOGO.png';
+      // if that doesn't load within a short time, replace with fallback badge
+      setTimeout(() => {
+        // naturalWidth may be 0 if load failed; also check complete & naturalWidth
+        if (!this.complete || this.naturalWidth === 0) {
+          const parent = this.parentElement;
+          if (parent) {
+            parent.innerHTML = '<div style=\"width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--teal-500),var(--teal-300));display:flex;align-items:center;justify-content:center;color:#042226;font-weight:900\">QV</div>';
+          }
+        }
+      }, 700);
+    };
+  }
+
+  // Elements
+  const form = document.getElementById('signupForm');
+  const full = document.getElementById('full');
+  const email = document.getElementById('email');
+  const password = document.getElementById('password');
+  const agree = document.getElementById('agree');
+  const formMsg = document.getElementById('formMsg');
+  const clearBtn = document.getElementById('clearBtn');
+  const loginModal = document.getElementById('loginModal');
+  const openLoginBtn = document.getElementById('open-login');
+  const loginLink = document.getElementById('login-link');
+  const cancelLogin = document.getElementById('cancelLogin');
+  const doLogin = document.getElementById('doLogin');
+  const ctaLearn = document.getElementById('ctaLearn');
+  const logBtn = document.getElementById('logBtn');
+
+  // Focus the first input on load for accessibility
+  full.focus();
+
+  // Small helper to show status messages (non-blocking)
+  function showMessage({ type='ok', text }) {
+    formMsg.innerHTML = '';
+    const div = document.createElement('div');
+    div.className = 'msg ' + (type === 'err' ? 'msg--err' : 'msg--ok');
+    div.textContent = text;
+    formMsg.appendChild(div);
+  }
+
+  // Form submit (demo): validate & store in localStorage (client-only demo)
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Basic validation
+    if (!full.value.trim() || !email.value.trim() || !password.value || !agree.checked) {
+      showMessage({ type:'err', text:'Please complete required fields and accept terms.' });
+      return;
+    }
+    try {
+      const users = JSON.parse(localStorage.getItem('qv_users') || '[]');
+      if (users.find(u => u.email === email.value.trim())) {
+        showMessage({ type:'err', text:'An account with this email already exists. Please login.' });
+        openLogin(); // show login for convenience
+        return;
+      }
+      users.push({ name: full.value.trim(), email: email.value.trim() });
+      localStorage.setItem('qv_users', JSON.stringify(users));
+      showMessage({ type:'ok', text: Welcome, ${full.value.trim()} — account created (demo). Redirecting... });
+      // simulate redirect (demo)
+      setTimeout(() => window.location.href='/', 900);
+    } catch(err) {
+      showMessage({ type:'err', text:'Unexpected error — please try again.' });
+    }
+  });
+
+  // Clear form
+  clearBtn.addEventListener('click', () => {
+    form.reset();
+    full.focus();
+    formMsg.innerHTML = '';
+  });
+
+  // Modal open/close (accessible)
+  function openLogin(){
+    loginModal.style.display = 'flex';
+    loginModal.setAttribute('aria-hidden', 'false');
+    // put focus on modal first control
+    document.getElementById('loginEmail').focus();
+    // trap focus - simple focus trap
+    document.addEventListener('focus', trapFocus, true);
+  }
+  function closeLogin(){
+    loginModal.style.display = 'none';
+    loginModal.setAttribute('aria-hidden', 'true');
+    openLoginBtn.focus();
+    document.removeEventListener('focus', trapFocus, true);
+  }
+  function trapFocus(e){
+    if (!loginModal.contains(e.target)) {
+      e.stopPropagation();
+      loginModal.querySelector('input, button, [tabindex]').focus();
+    }
+  }
+  openLoginBtn.addEventListener('click', openLogin);
+  loginLink.addEventListener('click', (ev)=>{ ev.preventDefault(); openLogin(); });
+  cancelLogin.addEventListener('click', closeLogin);
+  doLogin.addEventListener('click', ()=>{ alert('Demo login — implement server auth'); closeLogin(); });
+
+  // Log button demo: show recent signups (reads from localStorage)
+  logBtn.addEventListener('click', (ev) => {
+    ev.preventDefault();
+    const users = JSON.parse(localStorage.getItem('qv_users') || '[]');
+    if (users.length === 0) {
+      showMessage({ type:'ok', text: 'No signups yet (demo).' });
+      return;
+    }
+    const list = users.map(u => ${u.name} — ${u.email}).join('\\n');
+    // simple navigator clipboard + alert fallback (non-blocking)
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(list).then(()=> {
+        showMessage({ type:'ok', text: 'Signup log copied to clipboard (demo).' });
+      }).catch(()=> {
+        alert('Signups:\\n' + list);
+      });
+    } else {
+      alert('Signups:\\n' + list);
+    }
+  });
+
+  // Cancel modal on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && loginModal.style.display === 'flex') {
+      closeLogin();
+    }
+  });
+
+  // CTA Learn: small confetti + non-blocking UI feedback
+  ctaLearn.addEventListener('click', (e) => {
+    // minor feedback: update button text, create tiny confetti
+    const btn = e.currentTarget;
+    const original = btn.textContent;
+    btn.textContent = 'Opening...';
+    // create small confetti dots
+    for (let i=0;i<10;i++){
+      const d = document.createElement('div');
+      d.style.position='fixed';
+      d.style.left=(btn.getBoundingClientRect().left + btn.offsetWidth/2) + 'px';
+      d.style.top=(btn.getBoundingClientRect().top + btn.offsetHeight/2) + 'px';
+      d.style.width='8px'; d.style.height='8px'; d.style.borderRadius='2px';
+      const colors = ['#00b3b6','#66e4df','#ff9f3c','#6ad3e1'];
+      d.style.background = colors[Math.floor(Math.random()*colors.length)];
+      d.style.zIndex = 1100;
+      document.body.appendChild(d);
+      const dx = (Math.random()-0.5)*160;
+      const dy = - (80 + Math.random()*180);
+      d.animate([
+        { transform:'translate(0,0) rotate(0deg)', opacity:1 },
+        { transform:translate(${dx}px, ${dy}px) rotate(${Math.random()*360}deg), opacity:0 }
+      ], { duration: 900 + Math.random()*600, easing:'cubic-bezier(.2,.9,.2,1)'});
+      setTimeout(()=> d.remove(), 1600);
+    }
+    setTimeout(()=> btn.textContent = original, 900);
+    // show lightweight dialog/action (non-blocking)
+    showMessage({ type:'ok', text: 'Thanks — demo CTA triggered.' });
+  });
+
+  // Small pointer parallax for the scene (lightweight)
+  const scene = document.querySelector('.scene');
+  if (scene) {
+    let last = null;
+    scene.addEventListener('pointermove', (ev) => {
+      const r = scene.getBoundingClientRect();
+      const dx = (ev.clientX - (r.left + r.width/2)) / r.width;
+      const dy = (ev.clientY - (r.top + r.height/2)) / r.height;
+      scene.style.transform = translate3d(${dx*6}px,${dy*6}px,0);
+      clearTimeout(last);
+      last = setTimeout(()=> scene.style.transform = '', 120);
+    });
+  }
+
+  // Reduce motion preference support
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (mq.matches) {
+    // remove animations / heavy transforms if user prefers reduced motion
+    document.querySelectorAll('.scene, .badge').forEach(el => el.style.transition = 'none');
+  }
+})();
+</script>
+</body>
+</html>
