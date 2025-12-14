@@ -1,0 +1,2 @@
+Postgraduate courses focus on advanced concepts and research.
+Includes distributed systems, AI and analytics.

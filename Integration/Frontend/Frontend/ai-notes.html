@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AI Exam Notes | Quantum Vidya</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{margin:0;font-family:Inter;background:#f6fcfb;color:#053433}
+header{background:#fff;padding:16px 20px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+nav a{margin-left:18px;text-decoration:none;font-weight:600;color:#08605f}
+.container{max-width:900px;margin:40px auto;padding:0 20px}
+.card{background:#fff;padding:24px;border-radius:18px;box-shadow:0 20px 40px rgba(0,0,0,.08)}
+select,button{
+  width:100%;padding:12px;margin-top:10px;
+  border-radius:12px;border:1px solid #cdeeee;
+}
+button{
+  background:#00b3b6;color:#fff;font-weight:700;border:none;
+}
+.output{margin-top:20px;background:#f1ffff;padding:18px;border-radius:14px}
+</style>
+</head>
+
+<body>
+
+<header>
+  <strong>Quantum Vidya</strong>
+  <nav style="float:right">
+    <a href="home.html">Home</a>
+    <a href="elibrary.html">Library</a>
+    <a href="#">Exams</a>
+    <a href="#">Dashboard</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h2>AI Exam Notes Generator</h2>
+
+  <div class="card">
+    <select>
+      <option>Select Subject</option>
+      <option>Artificial Intelligence</option>
+      <option>DBMS</option>
+    </select>
+
+    <select>
+      <option>Select topic</option>
+      <option>AI</option>
+      <option>DBMS</option>
+    </select>
+<input id="subject" placeholder="Subject">
+<input id="topic" placeholder="Enter topic">
+<pre id="output"></pre>
+
+    <button>Generate Notes</button>
+
+    <div class="output">
+      <strong>AI Output (Demo)</strong>
+      <p>• Key definitions<br>• Important formulas<br>• Exam-focused summary</p>
+    </div>
+  </div>
+
+  <br><a href="elibrary.html">← Back to Library</a>
+</div>
+
+</body>
+</html>

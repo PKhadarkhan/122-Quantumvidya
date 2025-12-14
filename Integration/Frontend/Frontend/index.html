@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Quantum Vidya — Landing</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg-top:#cfeff3;
+  --bg-bottom:#bfe6ea;
+  --teal:#0fb2be;
+  --teal-2:#17d0da;
+  --gold:#ffb03b;
+  --text-dark:#05292a;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  height:100%;
+  margin:0;
+  font-family:Inter,system-ui;
+  background:
+    radial-gradient(800px 260px at 12% 14%, rgba(15,178,190,0.05), transparent 8%),
+    radial-gradient(700px 260px at 88% 86%, rgba(255,176,59,0.04), transparent 8%),
+    linear-gradient(180deg,var(--bg-top),var(--bg-bottom));
+  color:var(--text-dark);
+  overflow:hidden;
+}
+
+/* ===== GET STARTED BUTTON ===== */
+.top-cta{
+  position:absolute;
+  top:18px;
+  right:18px;
+  z-index:200;
+}
+.btn{
+  background:linear-gradient(135deg,var(--teal),var(--teal-2));
+  color:#042226;
+  padding:12px 18px;
+  border-radius:999px;
+  border:0;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(3,12,18,0.08);
+}
+
+/* ===== HERO ===== */
+.hero{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  z-index:20;
+  text-align:center;
+}
+
+/* ===== HEADLINE ===== */
+.headline{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  align-items:center;
+}
+
+.word{
+  font-size:clamp(56px,10vw,120px);
+  font-weight:900;
+  opacity:0;
+  line-height:0.9;
+}
+
+/* left & right animation */
+.quantum{
+  transform:translateX(-120%);
+  animation:fromLeft 1s cubic-bezier(.2,.9,.2,1) forwards;
+}
+.vidya{
+  transform:translateX(120%);
+  animation:fromRight 1s cubic-bezier(.2,.9,.2,1) forwards;
+  animation-delay:.35s;
+}
+
+@keyframes fromLeft{
+  to{transform:translateX(0);opacity:1}
+}
+@keyframes fromRight{
+  to{transform:translateX(0);opacity:1}
+}
+
+/* ===== TAGLINE ===== */
+.tagline{
+  margin-top:16px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+.tagline::after{
+  content:'';
+  display:block;
+  width:60px;
+  height:4px;
+  margin:10px auto 0;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--teal),var(--teal-2));
+}
+
+/* ===== ORBITS ===== */
+.orbit-wrap{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:520px;
+  height:320px;
+  pointer-events:none;
+  z-index:5;
+}
+
+.orbit-wrap svg ellipse{
+  transform-origin:400px 240px;
+}
+
+/* orbit animations */
+.orbit-1{animation:spinCW 18s linear infinite}
+.orbit-2{animation:spinCCW 12s linear infinite}
+.orbit-3{animation:spinCW 26s linear infinite}
+
+@keyframes spinCW{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+@keyframes spinCCW{
+  from{transform:rotate(360deg)}
+  to{transform:rotate(0deg)}
+}
+
+/* ===== PARTICLES ===== */
+.particles{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:420px;
+  height:280px;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  z-index:10;
+}
+
+.particle{
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  opacity:.6;
+  background:var(--teal);
+  animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+  100%{transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- GET STARTED -->
+<div class="top-cta">
+  <button class="btn" onclick="goNext()">GET STARTED</button>
+</div>
+
+<!-- ORBITS -->
+<div class="orbit-wrap">
+<svg viewBox="0 0 800 480">
+  <g transform="translate(400,240)">
+    <ellipse class="orbit-1" rx="180" ry="96" fill="none"
+      stroke="rgba(5,41,41,0.14)" stroke-width="3"/>
+    <ellipse class="orbit-2" rx="140" ry="78" fill="none"
+      stroke="rgba(15,178,190,0.20)" stroke-width="3"/>
+    <ellipse class="orbit-3" rx="220" ry="120" fill="none"
+      stroke="rgba(255,176,59,0.12)" stroke-width="2"/>
+  </g>
+</svg>
+</div>
+
+<!-- PARTICLES -->
+<div class="particles">
+  <div class="particle" style="left:40%;top:30%"></div>
+  <div class="particle" style="left:60%;top:50%"></div>
+  <div class="particle" style="left:50%;top:70%"></div>
+</div>
+
+<!-- HERO TEXT -->
+<div class="hero">
+  <div>
+    <div class="headline">
+      <div class="word quantum">Quantum</div>
+      <div class="word vidya">Vidya</div>
+    </div>
+    <div class="tagline">Learn · Evolve · Lead</div>
+  </div>
+</div>
+
+<script>
+function goNext(){
+  window.location.href = "register and login.html";
+}
+</script>
+<script src="script.js"></script>
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Courses | Quantum Vidya</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{margin:0;font-family:Inter;background:#f6fcfb;color:#053433}
+header{background:#fff;padding:16px 20px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+nav a{margin-left:18px;text-decoration:none;font-weight:600;color:#08605f}
+.container{max-width:1200px;margin:40px auto;padding:0 20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.card{background:#fff;padding:24px;border-radius:18px;box-shadow:0 20px 40px rgba(0,0,0,.08)}
+.progress{height:6px;background:#e0f5f5;border-radius:999px;margin-top:10px}
+.progress span{display:block;height:100%;width:60%;background:#00b3b6;border-radius:999px}
+</style>
+</head>
+
+<body>
+
+<header>
+  <strong>Quantum Vidya</strong>
+  <nav style="float:right">
+    <a href="home.html">Home</a>
+    <a href="elibrary.html">Library</a>
+    <a href="#">Exams</a>
+    <a href="#">Dashboard</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h2>Courses</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Artificial Intelligence</h3>
+      <p>Search, reasoning, ML basics</p>
+      <div class="progress"><span></span></div>
+    </div>
+
+    <div class="card">
+      <h3>DBMS</h3>
+      <p>SQL, normalization, indexing</p>
+      <div class="progress"><span style="width:40%"></span></div>
+    </div>
+
+    <div class="card">
+      <h3>Operating Systems</h3>
+      <p>Processes, memory, scheduling</p>
+      <div class="progress"><span style="width:70%"></span></div>
+    </div>
+  </div>
+
+  <br><a href="elibrary.html">← Back to Library</a>
+</div>
+
+</body>
+</html>

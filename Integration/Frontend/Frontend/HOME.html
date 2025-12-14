@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+<title>Quantum Vidya | Home</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ================= DESIGN TOKENS (SAME AS LANDING & REGISTER) ================= */
+:root{
+  --bg-1:#f6fcfb;
+  --bg-2:#eef8f7;
+
+  --teal-900:#053433;
+  --teal-700:#08605f;
+  --teal-500:#00b3b6;
+  --teal-300:#66e4df;
+
+  --warm:#ff9f3c;
+  --muted:#637f7f;
+
+  --card:#ffffff;
+  --radius:18px;
+  --shadow:0 26px 60px rgba(3,18,18,0.06);
+
+  --font:"Inter",system-ui,Arial;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:var(--font);
+  background:linear-gradient(180deg,var(--bg-1),var(--bg-2));
+  color:var(--teal-700);
+}
+
+/* ================= HEADER ================= */
+header{
+  background:#ffffff;
+  box-shadow:0 6px 20px rgba(0,0,0,.05);
+}
+
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:16px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+  color:var(--teal-900);
+}
+
+.logo{
+  width:42px;height:42px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--teal-500),var(--teal-300));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#042226;
+  font-weight:900;
+}
+
+nav a{
+  margin-left:20px;
+  text-decoration:none;
+  font-weight:700;
+  color:var(--teal-700);
+}
+
+.nav-active{
+  padding:8px 14px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--teal-500),var(--teal-300));
+  color:#042226;
+}
+
+/* ================= HERO / OVERVIEW ================= */
+.hero{
+  max-width:1200px;
+  margin:60px auto 40px;
+  padding:0 22px;
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:40px;
+  align-items:center;
+}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+}
+
+.hero h1{
+  font-size:42px;
+  font-weight:900;
+  margin:0 0 12px;
+  color:var(--teal-900);
+}
+
+.hero p{
+  font-size:18px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.hero-actions{
+  margin-top:24px;
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.btn-primary{
+  padding:14px 22px;
+  border-radius:999px;
+  border:none;
+  background:linear-gradient(90deg,var(--teal-500),var(--teal-300));
+  font-weight:800;
+  cursor:pointer;
+  color:#042226;
+}
+
+.btn-secondary{
+  padding:14px 22px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid rgba(0,0,0,.08);
+  font-weight:700;
+  cursor:pointer;
+  color:var(--teal-700);
+}
+
+/* ================= QUICK ACTION CARDS ================= */
+.actions{
+  max-width:1200px;
+  margin:20px auto 80px;
+  padding:0 22px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:22px;
+}
+
+.action-card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:26px;
+  box-shadow:var(--shadow);
+  transition:.25s ease;
+  cursor:pointer;
+}
+
+.action-card:hover{
+  transform:translateY(-8px);
+}
+
+.action-card h3{
+  margin:0 0 6px;
+  font-size:18px;
+  color:var(--teal-900);
+}
+
+.action-card p{
+  margin:0;
+  font-size:14px;
+  color:var(--muted);
+}
+
+/* ================= FOOTER ================= */
+footer{
+  text-align:center;
+  padding:26px;
+  font-size:14px;
+  color:var(--muted);
+}
+</style>
+</head>
+
+
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">QV</div>
+      Quantum Vidya
+    </div>
+   <nav>
+  <a href="#" class="nav-active" data-nav="HOME.html">Home</a>
+  <a href="#" data-nav="elibrary.html">Library</a>
+
+  <a href="#" data-nav="exams.html">Exams</a>
+<a href="#" data-nav="dashboardd.html">Dashboard</a>
+
+</nav>
+
+  </div>
+</header>
+
+<!-- ================= OVERVIEW SECTION ================= -->
+<section class="hero">
+  <div>
+    <h1>Welcome to Quantum Vidya</h1>
+    <p>
+      Your account is ready. This is your learning hub — access smart study
+      material, clear doubts with AI, take exams, and track your progress.
+    </p>
+
+    <div class="hero-actions">
+    <button class="btn-primary" data-nav="elibrary.html">
+  Go to E-Library
+</button>
+
+<button class="btn-secondary" data-nav="ai-doubt-solver.html">
+  Ask AI Doubt Solver
+</button>
+ 
+    </div>
+  </div>
+
+  <div>
+    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
+         alt="Students learning"
+         style="width:100%;border-radius:18px;box-shadow:var(--shadow)">
+  </div>
+</section>
+
+<!-- ================= QUICK ACTIONS ================= -->
+<section class="actions">
+  <div class="action-card" data-nav="elibrary.html">
+
+    <h3>📚 Smart E-Library</h3>
+    <p>Unit-wise notes, videos, and previous question papers.</p>
+  </div>
+
+  <div class="action-card" data-nav="ai-doubt-solver.html">
+    <h3>🤖 AI Doubt Solver</h3>
+    <p>Ask questions in natural language and get instant answers.</p>
+  </div>
+
+  <div class="action-card" data-nav="exams.html">
+
+    <h3>📝 AI Exams</h3>
+    <p>Practice with auto-generated exams and instant evaluation.</p>
+  </div>
+
+  <div class="action-card" data-nav="dashboardd.html">
+
+    <h3>📊 Analytics</h3>
+    <p>Track your progress, XP, and performance insights.</p>
+  </div>
+</section>
+
+<footer>
+  © 2025 Quantum Vidya · Learn · Evolve · Lead
+</footer>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("[data-nav]").forEach(el => {
+    el.addEventListener("click", e => {
+      e.preventDefault();
+      const target = el.getAttribute("data-nav");
+      if (target) {
+        window.location.href = target;
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>
