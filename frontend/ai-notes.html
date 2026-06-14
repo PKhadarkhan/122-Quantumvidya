@@ -1,66 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>AI Exam Notes | Quantum Vidya</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Exam Notes | Quantum Vidya</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .output {
+            margin-top: 32px;
+            background: var(--surface);
+            border: 1px solid var(--primary-glow);
+            border-radius: var(--radius-md);
+            padding: 32px;
+            display: none;
+            color: var(--text-main);
+            line-height: 1.8;
+        }
 
-<style>
-body{margin:0;font-family:Inter;background:#f6fcfb;color:#053433}
-header{background:#fff;padding:16px 20px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
-nav a{margin-left:18px;text-decoration:none;font-weight:600;color:#08605f}
-.container{max-width:900px;margin:40px auto;padding:0 20px}
-.card{background:#fff;padding:24px;border-radius:18px;box-shadow:0 20px 40px rgba(0,0,0,.08)}
-select,button{
-  width:100%;padding:12px;margin-top:10px;
-  border-radius:12px;border:1px solid #cdeeee;
-}
-button{
-  background:#00b3b6;color:#fff;font-weight:700;border:none;
-}
-.output{margin-top:20px;background:#f1ffff;padding:18px;border-radius:14px}
-</style>
+        .output h1, .output h2, .output h3 {
+            color: var(--primary);
+            margin-top: 32px;
+            border-bottom: 1px solid var(--surface-border);
+            padding-bottom: 12px;
+        }
+
+        .output ul, .output ol {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
-
 <body>
 
-<header>
-  <strong>Quantum Vidya</strong>
-  <nav style="float:right">
-    <a href="home.html">Home</a>
-    <a href="elibrary.html">Library</a>
-    <a href="#">Exams</a>
-    <a href="#">Dashboard</a>
-  </nav>
-</header>
+    <nav class="navbar scrolled flex-between container">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">Q</div>
+            Quantum Vidya
+        </a>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="elibrary.html">Library</a></li>
+            <li><a href="ai-notes.html" class="active">AI Notes</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+    </nav>
 
-<div class="container">
-  <h2>AI Exam Notes Generator</h2>
+    <main class="container page-container">
+        <div class="glass-card animate-fade-in" style="max-width: 800px; margin: 0 auto;">
+            <h1 class="text-gradient">🧠 AI Exam Notes Generator</h1>
+            <p>Generate perfectly structured, exam-oriented notes instantly for your academic subjects.</p>
 
-  <div class="card">
-    <select>
-      <option>Select Subject</option>
-      <option>Artificial Intelligence</option>
-      <option>DBMS</option>
-    </select>
+            <div class="form-group grid-2" style="margin-bottom: 32px;">
+                <div class="field">
+                    <label class="form-label">Course / Program</label>
+                    <input type="text" id="courseInput" class="form-control" placeholder="e.g. B.Tech Computer Science">
+                </div>
+                <div class="field">
+                    <label class="form-label">Subject & Topic</label>
+                    <input type="text" id="topicInput" class="form-control" placeholder="e.g. Database Management Systems - Normalization">
+                </div>
+            </div>
 
-    <select>
-      <option>Select topic</option>
-      <option>AI</option>
-      <option>DBMS</option>
-    </select>
+            <div class="flex-center" style="justify-content: flex-start; gap: 16px;">
+                <button class="btn btn-primary" id="generateBtn" onclick="generateNotes()">
+                    Generate Advanced Notes
+                </button>
+                <span id="loadingSpinner" class="loader" style="display: none; width: 28px; height: 28px; border-width: 3px;"></span>
+            </div>
 
-    <button>Generate Notes</button>
+            <div class="output animate-fade-in" id="outputBox">
+                <!-- Markdown notes will be injected here -->
+            </div>
+            
+            <div style="margin-top: 32px;">
+                <a href="elibrary.html" class="btn btn-secondary">← Back to Library</a>
+            </div>
+        </div>
+    </main>
 
-    <div class="output">
-      <strong>AI Output (Demo)</strong>
-      <p>• Key definitions<br>• Important formulas<br>• Exam-focused summary</p>
-    </div>
-  </div>
+    <script src="js/api.js"></script>
+    <script>
+        async function generateNotes() {
+            const course = document.getElementById("courseInput").value.trim();
+            const topic = document.getElementById("topicInput").value.trim();
 
-  <br><a href="elibrary.html">← Back to Library</a>
-</div>
+            if(!course || !topic) return alert("Please provide both Course and Topic.");
 
+            const btn = document.getElementById("generateBtn");
+            const spinner = document.getElementById("loadingSpinner");
+            const outputBox = document.getElementById("outputBox");
+
+            btn.disabled = true;
+            spinner.style.display = "inline-block";
+            outputBox.style.display = "none";
+
+            try {
+                const data = await QuantumAPI.getNotes(course, topic);
+                outputBox.innerHTML = marked.parse(data.notes);
+                outputBox.style.display = "block";
+            } catch (err) {
+                outputBox.innerHTML = `<p style="color: var(--danger);">Error communicating with AI Backend. Please make sure the backend is running.</p>`;
+                outputBox.style.display = "block";
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>

@@ -1,17 +1,23 @@
 from langchain_ollama import OllamaLLM
 
-llm = OllamaLLM(model="gemma3:1b", temperature=0.2, num_predict=200)
+llm = OllamaLLM(model="llama3.2", temperature=0.3, num_predict=1000)
 
-def generate_notes(course, topic):
+async def generate_notes(course, topic):
     prompt = f"""
-Generate exam-oriented notes.
+You are a brilliant academic notes generator for Quantum Vidya.
+Generate highly detailed, exam-oriented notes.
 
 Course: {course}
 Topic: {topic}
 
 Rules:
-- Bullet points
-- Simple language
-- Max 8 points
+- Use perfect Markdown structure (headings, bold text, bullet points).
+- Provide a clear introduction.
+- Provide 5-8 detailed core concepts.
+- Conclude with a real-world application or example.
+- Do not add any conversational filler.
 """
-    return llm.invoke(prompt)
+    try:
+        return await llm.ainvoke(prompt)
+    except Exception as e:
+        return f"## ⚠️ AI Service Unavailable\n\nCould not generate notes. Please ensure **Ollama is running** with the `llama3.2` model.\n\n```\nollama run llama3.2\n```\n\n**Error:** `{str(e)}`"

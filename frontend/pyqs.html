@@ -1,41 +1,109 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>PYQs | Quantum Vidya</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI PYQs | Quantum Vidya</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .output {
+            margin-top: 32px;
+            background: var(--surface);
+            border: 1px solid var(--primary-glow);
+            border-radius: var(--radius-md);
+            padding: 32px;
+            display: none;
+            color: var(--text-main);
+            line-height: 1.8;
+        }
 
-<style>
-body{margin:0;font-family:Inter;background:#f6fcfb;color:#053433}
-header{background:#fff;padding:16px 20px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
-nav a{margin-left:18px;text-decoration:none;font-weight:600;color:#08605f}
-.container{max-width:900px;margin:40px auto;padding:0 20px}
-.paper{background:#fff;padding:18px;border-radius:14px;box-shadow:0 16px 30px rgba(0,0,0,.08);margin-bottom:14px}
-</style>
+        .output h1, .output h2, .output h3 {
+            color: var(--primary);
+            margin-top: 32px;
+            border-bottom: 1px solid var(--surface-border);
+            padding-bottom: 12px;
+        }
+
+        .output ol, .output ul {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
-
 <body>
 
-<header>
-  <strong>Quantum Vidya</strong>
-  <nav style="float:right">
-    <a href="home.html">Home</a>
-    <a href="elibrary.html">Library</a>
-    <a href="#">Exams</a>
-    <a href="#">Dashboard</a>
-  </nav>
-</header>
+    <nav class="navbar scrolled flex-between container">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">Q</div>
+            Quantum Vidya
+        </a>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="elibrary.html">Library</a></li>
+            <li><a href="pyqs.html" class="active">PYQs</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+    </nav>
 
-<div class="container">
-  <h2>Previous Year Question Papers</h2>
+    <main class="container page-container">
+        <div class="glass-card animate-fade-in" style="max-width: 900px; margin: 0 auto;">
+            <h1 class="text-gradient">📄 AI Previous Year Question Paper Generator</h1>
+            <p>Generate highly realistic, exam-oriented previous year question papers mapped to your university curriculum.</p>
 
-  <div class="paper">AI – 2023</div>
-  <div class="paper">DBMS – 2022</div>
-  <div class="paper">OS – 2021</div>
+            <div class="form-group grid-2" style="margin-bottom: 32px;">
+                <div class="field">
+                    <label class="form-label">Course Name</label>
+                    <input type="text" id="courseInput" class="form-control" placeholder="e.g. B.Sc IT">
+                </div>
+                <div class="field">
+                    <label class="form-label">Subject</label>
+                    <input type="text" id="subjectInput" class="form-control" placeholder="e.g. Artificial Intelligence">
+                </div>
+            </div>
 
-  <br><a href="elibrary.html">← Back to Library</a>
-</div>
+            <div class="flex-center" style="justify-content: flex-start; gap: 16px;">
+                <button class="btn btn-primary" id="generateBtn" onclick="generatePYQ()">
+                    Generate Exam Paper
+                </button>
+                <span id="loadingSpinner" class="loader" style="display: none; width: 28px; height: 28px; border-width: 3px;"></span>
+            </div>
 
+            <div class="output animate-fade-in" id="outputBox">
+                <!-- Markdown PYQ will be injected here -->
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script>
+        async function generatePYQ() {
+            const course = document.getElementById("courseInput").value.trim();
+            const subject = document.getElementById("subjectInput").value.trim();
+
+            if(!course || !subject) return alert("Please provide both Course and Subject.");
+
+            const btn = document.getElementById("generateBtn");
+            const spinner = document.getElementById("loadingSpinner");
+            const outputBox = document.getElementById("outputBox");
+
+            btn.disabled = true;
+            spinner.style.display = "inline-block";
+            outputBox.style.display = "none";
+
+            try {
+                const data = await QuantumAPI.getPyq(course, subject);
+                outputBox.innerHTML = marked.parse(data.questions);
+                outputBox.style.display = "block";
+            } catch (err) {
+                outputBox.innerHTML = `<p style="color: var(--danger);">Error communicating with AI Backend.</p>`;
+                outputBox.style.display = "block";
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>

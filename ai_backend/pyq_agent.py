@@ -1,17 +1,23 @@
 from langchain_ollama import OllamaLLM
 
-llm = OllamaLLM(model="gemma3:1b", temperature=0.3, num_predict=300)
+llm = OllamaLLM(model="llama3.2", temperature=0.4, num_predict=1000)
 
-def generate_pyq(course, subject):
+async def generate_pyq(course, subject):
     prompt = f"""
-Generate Previous Year Question Paper.
+You are an expert exam paper setter for a university.
+Generate a highly realistic "Previous Year Question Paper" (PYQ).
 
 Course: {course}
 Subject: {subject}
 
 Rules:
-- 8–10 questions
-- Exam oriented
-- No answers
+- Format it beautifully in Markdown.
+- Include 3 Sections: Section A (Short Answers, 5 questions), Section B (Medium Answers, 3 questions), Section C (Long/Essay Answers, 2 questions).
+- Make the questions extremely relevant to standard university curriculums.
+- Do not provide the answers, only the questions.
+- Add marks for each question (Section A: 2 marks, Section B: 5 marks, Section C: 10 marks).
 """
-    return llm.invoke(prompt)
+    try:
+        return await llm.ainvoke(prompt)
+    except Exception as e:
+        return f"## ⚠️ AI Service Unavailable\n\nCould not generate PYQs. Please ensure **Ollama is running** with the `llama3.2` model.\n\n```\nollama run llama3.2\n```\n\n**Error:** `{str(e)}`"

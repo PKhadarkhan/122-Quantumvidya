@@ -46,10 +46,10 @@ because managing time during a hackathon is very important.
 5. 10% Presentation
 
 ### Submission Checklist
-- Updated README.md (problem, data link, design, assumptions).
-- Reproducible Notebook(s) and/or minimal FastAPI service (no UI required).
-- requirements.txt / environment.yml and run commands.
-- Evaluation notes (metrics, tests, guardrails, limitations).
-- Commit history & AI chat logs (attach/export or link).
+- [x] Updated README.md (problem, data link, design, assumptions).
+- [x] Reproducible Notebook(s) and/or minimal FastAPI service (no UI required).
+- [x] requirements.txt / environment.yml and run commands.
+- [ ] Evaluation notes (metrics, tests, guardrails, limitations).
+- [ ] Commit history & AI chat logs (attach/export or link).
 
 ## VERY IMP NOTE: A 10min demonstration video has to be screen recorded with your voice and should be shared through YouTube link.

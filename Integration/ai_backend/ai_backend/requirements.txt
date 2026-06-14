@@ -1,8 +1,0 @@
-fastapi
-uvicorn
-langchain
-langchain-community
-chromadb
-sentence-transformers
-python-docx
-requests
