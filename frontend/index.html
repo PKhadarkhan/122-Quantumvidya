@@ -3,373 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Doubt Solver | Quantum Vidya</title>
+    <title>Welcome | Quantum Vidya</title>
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden; /* Prevent body scrolling, let chat container scroll */
-            background: var(--bg-dark);
-        }
+    <script>
+        // Check if already logged in
+        document.addEventListener("DOMContentLoaded", () => {
+            const user = localStorage.getItem("currentUser");
+            if(user) {
+                // If logged in, maybe show Dashboard button instead of Login
+                const navLinks = document.querySelector('.nav-links');
+                navLinks.innerHTML = `
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="elibrary.html">Library</a></li>
+                    <li><a href="exams.html">Exams</a></li>
+                    <li><button class="btn-ghost" onclick="logout()">Logout</button></li>
+                `;
+            }
+        });
 
-        .navbar {
-            background: rgba(5, 22, 26, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--surface-border);
+        function logout() {
+            localStorage.removeItem("currentUser");
+            window.location.reload();
         }
-
-        /* Chat layout */
-        .chat-container {
-            height: 100vh;
-            padding-top: 80px;
-            padding-bottom: 140px; /* Space for input */
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
-
-        .chat-history {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            padding: 20px;
-        }
-
-        .message {
-            display: flex;
-            gap: 16px;
-            opacity: 0;
-            animation: fadeIn 0.3s forwards;
-            max-width: 90%;
-        }
-
-        .message.user {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
-
-        .message.ai {
-            align-self: flex-start;
-        }
-
-        .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .user .avatar {
-            background: var(--surface-hover);
-            color: var(--text-main);
-        }
-
-        .ai .avatar {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--bg-dark);
-        }
-
-        .bubble {
-            padding: 16px 20px;
-            border-radius: 18px;
-            line-height: 1.6;
-            font-size: 1rem;
-            color: var(--text-main);
-        }
-
-        .user .bubble {
-            background: rgba(255, 255, 255, 0.1);
-            border-top-right-radius: 4px;
-        }
-
-        .ai .bubble {
-            background: transparent;
-            width: 100%;
-        }
-        
-        .ai .bubble p {
-            margin-bottom: 1rem;
-        }
-        .ai .bubble p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Input Area */
-        .input-wrapper {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(180deg, transparent, var(--bg-dark) 20%);
-            padding: 30px 20px 40px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .input-container {
-            max-width: 800px;
-            width: 100%;
-            position: relative;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--surface-border);
-            border-radius: 24px;
-            display: flex;
-            align-items: flex-end;
-            padding: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
-        }
-
-        .input-container:focus-within {
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        textarea {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            font-family: inherit;
-            font-size: 1rem;
-            resize: none;
-            padding: 8px 12px;
-            max-height: 200px;
-            outline: none;
-            line-height: 1.5;
-        }
-
-        .send-btn {
-            background: var(--primary);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--bg-dark);
-            cursor: pointer;
-            transition: all 0.2s;
-            flex-shrink: 0;
-            margin-bottom: 2px;
-        }
-
-        .send-btn:hover {
-            transform: scale(1.1);
-            background: var(--secondary);
-        }
-        
-        .send-btn:disabled {
-            background: var(--surface-hover);
-            color: var(--text-muted);
-            cursor: not-allowed;
-            transform: scale(1);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.25rem;
-        }
-
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--bg-dark);
-            font-weight: 800;
-            font-size: 1rem;
-        }
-
-        /* Typing indicator */
-        .typing-indicator {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-            height: 24px;
-        }
-
-        .typing-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--text-muted);
-            border-radius: 50%;
-            animation: bounce 1.4s infinite ease-in-out both;
-        }
-
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
-    </style>
+    </script>
 </head>
 <body>
 
-    <nav class="navbar scrolled flex-between container">
+    <nav class="navbar flex-between container">
         <a href="index.html" class="logo">
             <div class="logo-icon">Q</div>
             Quantum Vidya
         </a>
         <ul class="nav-links">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="elibrary.html">Library</a></li>
-            <li><a href="index.html" style="color: var(--primary);">AI Solver</a></li>
+            <li><a href="login.html" class="btn-ghost">Login</a></li>
+            <li><a href="register.html" class="btn-primary" style="padding: 8px 16px;">Sign Up</a></li>
         </ul>
     </nav>
 
-    <!-- Scrollable Chat Area -->
-    <div class="chat-container" id="chatContainer">
-        <div class="chat-history" id="chatHistory">
-            <!-- Initial AI Greeting -->
-            <div class="message ai">
-                <div class="avatar">Q</div>
-                <div class="bubble">
-                    <p>Hello! I am your AI Doubt Solver. Ask me any academic question, and I'll explain it clearly based on your curriculum.</p>
+    <main class="container page-container">
+        <!-- Hero Section -->
+        <section class="hero animate-fade-in" style="margin-top: 60px;">
+            <div>
+                <h1 class="text-gradient" style="font-size: 3.5rem; line-height: 1.2;">Learn Smarter, <br>Evolve Faster</h1>
+                <p style="font-size: 1.2rem; margin-top: 20px; color: var(--text-muted);">
+                    Your AI-powered learning hub — access smart study material, clear doubts instantly, take automated exams, and track your progress seamlessly.
+                </p>
+
+                <div class="hero-actions" style="margin-top: 30px;">
+                    <a href="register.html" class="btn-primary" style="padding: 14px 28px; font-size: 1.1rem; text-decoration: none;">
+                        Get Started
+                    </a>
+                    <a href="login.html" class="btn-secondary" style="padding: 14px 28px; font-size: 1.1rem; text-decoration: none;">
+                        Login to Account
+                    </a>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Fixed Bottom Input -->
-    <div class="input-wrapper">
-        <div class="input-container">
-            <textarea id="questionInput" rows="1" placeholder="Ask your academic doubts here... (Press Enter to send)"></textarea>
-            <button class="send-btn" id="askBtn" onclick="solveDoubt()">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-            </button>
-        </div>
-    </div>
+            <div class="delay-200 animate-fade-in">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" alt="Students learning" style="width:100%; border-radius:var(--radius-lg); box-shadow:0 20px 50px rgba(0,0,0,0.5)">
+            </div>
+        </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="js/api.js"></script>
-    <script>
-        const inputField = document.getElementById('questionInput');
-        const chatHistory = document.getElementById('chatHistory');
-        const chatContainer = document.getElementById('chatContainer');
-        const askBtn = document.getElementById('askBtn');
+        <!-- Quick Actions Grid -->
+        <section class="feature-grid animate-fade-in delay-200" style="margin-top: 80px;">
+            <div class="glass-card action-card">
+                <h3 class="text-gradient">📚 Smart E-Library</h3>
+                <p>Unit-wise notes, videos, and previous question papers.</p>
+            </div>
 
-        // Auto-resize textarea
-        inputField.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-        });
+            <div class="glass-card action-card">
+                <h3 class="text-gradient">🤖 AI Doubt Solver</h3>
+                <p>Ask questions in natural language and get instant answers.</p>
+            </div>
 
-        // Enter to submit
-        inputField.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                solveDoubt();
-            }
-        });
+            <div class="glass-card action-card">
+                <h3 class="text-gradient">📝 AI Exams</h3>
+                <p>Practice with auto-generated exams and instant evaluation.</p>
+            </div>
 
-        function appendMessage(role, contentHtml, isTyping = false) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `message ${role}`;
-            
-            const avatar = document.createElement('div');
-            avatar.className = 'avatar';
-            avatar.innerText = role === 'user' ? 'U' : 'Q';
-            
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-            if (isTyping) {
-                bubble.innerHTML = `
-                    <div class="typing-indicator">
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                    </div>
-                `;
-                bubble.id = "typingIndicatorBubble";
-            } else {
-                bubble.innerHTML = contentHtml;
-            }
+            <div class="glass-card action-card">
+                <h3 class="text-gradient">📊 Analytics</h3>
+                <p>Track your progress, XP, and performance insights.</p>
+            </div>
+        </section>
+    </main>
 
-            msgDiv.appendChild(avatar);
-            msgDiv.appendChild(bubble);
-            chatHistory.appendChild(msgDiv);
-            
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-            return bubble; // Return bubble to allow updating text later
-        }
+    <footer style="text-align: center; margin-top: 80px; padding-bottom: 20px; color: var(--text-muted);">
+        <p>© 2026 Quantum Vidya · Learn · Evolve · Lead</p>
+    </footer>
 
-        async function solveDoubt() {
-            const q = inputField.value.trim();
-            if(!q) return;
-
-            // 1. Append User Message
-            appendMessage('user', `<p>${q}</p>`);
-            
-            // 2. Clear input
-            inputField.value = '';
-            inputField.style.height = 'auto';
-            askBtn.disabled = true;
-
-            // 3. Show "Typing..." AI Message
-            appendMessage('ai', '', true);
-
-            try {
-                // Call backend API
-                const data = await QuantumAPI.ask(q);
-                
-                // 4. Remove Typing Indicator
-                document.getElementById('typingIndicatorBubble').parentElement.remove();
-                
-                // 5. Simulate Typing Effect for AI Response
-                const newAiBubble = appendMessage('ai', ''); // Create empty bubble
-                const fullMarkdown = data.answer || "Sorry, I could not generate an answer.";
-                
-                let i = 0;
-                let currentText = '';
-                
-                const interval = setInterval(() => {
-                    // Reveal chunk of characters to speed up slightly but keep typing feel
-                    const chunkSize = Math.floor(Math.random() * 3) + 2; 
-                    currentText += fullMarkdown.substring(i, i + chunkSize);
-                    i += chunkSize;
-                    
-                    newAiBubble.innerHTML = marked.parse(currentText);
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-
-                    if (i >= fullMarkdown.length) {
-                        clearInterval(interval);
-                        // Ensure full final text is parsed exactly
-                        newAiBubble.innerHTML = marked.parse(fullMarkdown);
-                        chatContainer.scrollTop = chatContainer.scrollHeight;
-                        askBtn.disabled = false;
-                        inputField.focus();
-                    }
-                }, 20); // ms per chunk
-
-            } catch (err) {
-                console.error(err);
-                if(document.getElementById('typingIndicatorBubble')) {
-                    document.getElementById('typingIndicatorBubble').parentElement.remove();
-                }
-                appendMessage('ai', '<p style="color: #ff5555;">Error communicating with AI Backend. Please make sure the backend is running.</p>');
-                askBtn.disabled = false;
-            }
-        }
-    </script>
 </body>
 </html>
