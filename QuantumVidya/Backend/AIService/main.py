@@ -5,6 +5,9 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import json
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from rag import solve_doubt
 from docx_agent import generate_docx
@@ -13,9 +16,6 @@ from pyq_agent import generate_pyq
 from textbook_agent import generate_textbook
 from textbook_data import TEXTBOOKS
 from library_agent import generate_library_explanation
-from dotenv import load_dotenv
-
-load_dotenv()
 app = FastAPI(
     title="Quantum Vidya AI Backend",
     description="AI-powered educational platform backend with LLM integration",
