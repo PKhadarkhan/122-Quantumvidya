@@ -13,7 +13,9 @@ from pyq_agent import generate_pyq
 from textbook_agent import generate_textbook
 from textbook_data import TEXTBOOKS
 from library_agent import generate_library_explanation
+from dotenv import load_dotenv
 
+load_dotenv()
 app = FastAPI(
     title="Quantum Vidya AI Backend",
     description="AI-powered educational platform backend with LLM integration",
