@@ -73,43 +73,48 @@ Frontend (HTML/JS) ↔ REST APIs (FastAPI) ↔ AI Agents (LangChain + Ollama) �
 
 ---
 
-## ⚙️ How to Run This Project Locally
+## ⚙️ How to Run This Project Locally (Easy Step-by-Step Guide)
 
-Follow these steps to set up and run the application on your local machine.
+Follow these easy steps to get the Quantum Vidya platform running on your own machine. We use a **Local LLM** to ensure complete privacy and zero API costs!
 
-### Prerequisites
-1. **Python 3.9+** installed on your machine.
-2. **Ollama** installed (from [ollama.com](https://ollama.com/)).
+### 📌 Prerequisites
+- **Python 3.9+** installed on your computer.
+- **Ollama** installed (Download from [ollama.com](https://ollama.com/)).
 
-### Step 1: Start Ollama & Download the Model
-Since this project uses Local LLMs for privacy and zero API costs, you need to pull the Llama 3.2 model:
+---
+
+### 🟢 Step 1: Start the Local LLM (Ollama)
+We use the powerful `llama3.2` model locally to power all the AI features. Open a new terminal and run:
 ```bash
-# In your terminal, run:
 ollama run llama3.2
 ```
-*Keep Ollama running in the background.*
+> **Important:** Keep this terminal open in the background so the AI can process requests.
 
-### Step 2: Install Backend Dependencies
-Navigate to the backend directory and install the required Python packages:
+---
+
+### 🟢 Step 2: Install Project Dependencies
+Open a *second* terminal, navigate to the project directory, and install the required Python packages:
 ```bash
 cd ai_backend
 pip install -r requirements.txt
 ```
 
-### Step 3: Run the FastAPI Backend
-Start the backend server using Uvicorn:
+---
+
+### 🟢 Step 3: Run the FastAPI Server
+In the same terminal (inside the `ai_backend` folder), start the backend server:
 ```bash
 python -m uvicorn main:app --reload --port 8080
 ```
-The backend API will be available at `http://localhost:8080`. 
-*Note: The FastAPI backend is configured to automatically serve the frontend files natively at the root URL.*
+> You should see a message indicating the server is running on `http://127.0.0.1:8080` or `http://localhost:8080`.
 
-### Step 4: Access the Application
-Open your web browser and navigate to:
-```text
-http://localhost:8080/
-```
-You are now fully ready to interact with the AI Doubt Solver, Notes Generator, Textbook Generator, PYQs, and Mock Exams!
+---
+
+### 🟢 Step 4: Access the Web Application
+Open your web browser (Chrome, Edge, Safari) and go to:
+👉 **[http://localhost:8080/](http://localhost:8080/)**
+
+You are now ready to interact with your local, completely free AI Educational Platform!
 
 ---
 

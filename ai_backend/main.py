@@ -8,11 +8,12 @@ import os
 
 from rag import solve_doubt
 from docx_agent import generate_docx
-from notes_agent import generate_notes
+from notes_agent import generate_notes, generate_notes_chat
 from exam_agent import generate_exam
 from pyq_agent import generate_pyq
 from textbook_agent import generate_textbook
 from textbook_data import TEXTBOOKS
+from library_agent import generate_library_explanation
 
 app = FastAPI(
     title="Quantum Vidya AI Backend",
@@ -55,6 +56,17 @@ async def ask(req: AskRequest):
         return {"answer": answer, "docx": generate_docx(answer)}
     return {"answer": answer}
 
+class ChatMessage(BaseModel):
+    message: str
+
+@app.post("/chat/doubts")
+async def chat_doubts(req: ChatMessage):
+    if not req.message or not req.message.strip():
+        raise HTTPException(status_code=400, detail="Message cannot be empty.")
+    answer = await solve_doubt(req.message)
+    return {"reply": answer}
+
+
 
 # =================== AI NOTES ===================
 class NotesRequest(BaseModel):
@@ -66,6 +78,13 @@ async def notes(req: NotesRequest):
     if not req.course or not req.topic:
         raise HTTPException(status_code=400, detail="Course and topic are required.")
     return {"notes": await generate_notes(req.course, req.topic)}
+
+@app.post("/chat/notes")
+async def chat_notes(req: ChatMessage):
+    if not req.message or not req.message.strip():
+        raise HTTPException(status_code=400, detail="Message cannot be empty.")
+    return {"reply": await generate_notes_chat(req.message)}
+
 
 
 # =================== AI EXAM ===================
@@ -108,6 +127,13 @@ async def generate_textbook_endpoint(req: TextbookRequest):
     if not req.course or not req.subject or not req.level:
         raise HTTPException(status_code=400, detail="Level, course, and subject are required.")
     return {"textbook": await generate_textbook(req.level, req.course, req.subject)}
+
+# =================== LIBRARY CHAT ===================
+@app.post("/chat/library")
+async def chat_library(req: ChatMessage):
+    if not req.message or not req.message.strip():
+        raise HTTPException(status_code=400, detail="Message cannot be empty.")
+    return {"reply": await generate_library_explanation(req.message)}
 
 
 # =================== AUTHENTICATION ===================

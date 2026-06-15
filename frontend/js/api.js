@@ -1,8 +1,8 @@
 // Quantum API Service
 // Handles all communication with the FastAPI backend
 
-const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:' || window.location.hostname.includes('github.io')
-    ? 'http://localhost:8080' 
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:8080'
     : ''; // Empty means relative to the same origin in production
 
 window.QuantumAPI = {
@@ -13,7 +13,7 @@ window.QuantumAPI = {
     request: async (endpoint, body = {}, timeoutMs = 120000) => {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-        
+
         try {
             const response = await fetch(`${API_BASE_URL}${endpoint}`, {
                 method: 'POST',
@@ -24,9 +24,9 @@ window.QuantumAPI = {
                 body: JSON.stringify(body),
                 signal: controller.signal
             });
-            
+
             clearTimeout(timeoutId);
-            
+
             if (!response.ok) {
                 const errData = await response.json().catch(() => ({}));
                 throw new Error(errData.detail || errData.message || `Server Error: ${response.status}`);
@@ -51,6 +51,15 @@ window.QuantumAPI = {
         }
     },
 
+    chatDoubts: async (message) => {
+        try {
+            return await QuantumAPI.request('/chat/doubts', { message });
+        } catch (error) {
+            console.error("QuantumAPI Chat Doubts Error:", error);
+            throw error;
+        }
+    },
+
     // ---------------- AI NOTES ----------------
     getNotes: async (course, topic) => {
         try {
@@ -60,6 +69,26 @@ window.QuantumAPI = {
             throw error;
         }
     },
+
+    chatNotes: async (message) => {
+        try {
+            return await QuantumAPI.request('/chat/notes', { message });
+        } catch (error) {
+            console.error("QuantumAPI Chat Notes Error:", error);
+            throw error;
+        }
+    },
+
+    // ---------------- LIBRARY CHAT ----------------
+    chatLibrary: async (message) => {
+        try {
+            return await QuantumAPI.request('/chat/library', { message });
+        } catch (error) {
+            console.error("QuantumAPI Chat Library Error:", error);
+            throw error;
+        }
+    },
+
 
     // ---------------- PYQs ----------------
     getPyq: async (course, subject) => {

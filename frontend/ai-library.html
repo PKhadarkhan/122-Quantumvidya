@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Exam Notes | Quantum Vidya</title>
+    <title>AI Library Assistant | Quantum Vidya</title>
     
     <!-- Original Styles for Navbar -->
     <link rel="stylesheet" href="css/styles.css">
@@ -106,8 +106,8 @@
         </a>
         <ul class="nav-links" style="display:flex; gap:20px; list-style:none;">
             <li><a href="home.html" style="color:white; text-decoration:none;">Home</a></li>
-            <li><a href="elibrary.html" style="color:white; text-decoration:none;">Library</a></li>
-            <li><a href="ai-notes.html" style="color:var(--primary); text-decoration:none;">AI Notes</a></li>
+            <li><a href="elibrary.html" style="color:var(--primary); text-decoration:none;">Library</a></li>
+            <li><a href="ai-notes.html" style="color:white; text-decoration:none;">AI Notes</a></li>
             <li><a href="dashboard.html" style="color:white; text-decoration:none;">Dashboard</a></li>
         </ul>
     </nav>
@@ -118,7 +118,7 @@
 
             <!-- Header -->
             <div class="p-6 border-b border-white/10 flex justify-between items-center transition-all duration-300">
-                <h1 class="text-2xl font-bold text-white tracking-wide">🧠 AI Notes Generator <span class="text-sm font-light text-blue-200 ml-2">Gemma 3 4B</span></h1>
+                <h1 class="text-2xl font-bold text-white tracking-wide">📚 AI Library Assistant <span class="text-sm font-light text-blue-200 ml-2">Gemma 3 4B</span></h1>
             </div>
 
             <!-- Chat Box -->
@@ -148,7 +148,7 @@
             <!-- Input Area -->
             <div class="p-4 border-t border-white/10 bg-black/20">
                 <form @submit.prevent="sendMessage" class="relative flex items-center">
-                    <input x-model="newMessage" type="text" placeholder="What topic do you need notes for?"
+                    <input x-model="newMessage" type="text" placeholder="What topic do you want to explore?"
                         class="w-full bg-white/5 text-white placeholder-white/40 border border-white/10 rounded-full px-6 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/10 transition-all duration-300"
                         :disabled="isWaiting">
                     <button type="submit" :disabled="isWaiting || !newMessage.trim()"
@@ -168,7 +168,7 @@
         function chatApp() {
             return {
                 messages: [
-                    { sender: 'AI Notes Assistant', text: 'Hello! I am your AI Notes Assistant. Tell me what topic or subject you want notes for, and I will generate them for you.', is_ai: true }
+                    { sender: 'AI Library Assistant', text: 'Welcome to the Smart E-Library! I can provide topic explanations or retrieve notes from the library. What do you want to learn today?', is_ai: true }
                 ],
                 newMessage: '',
                 isWaiting: false,
@@ -183,20 +183,20 @@
                     this.scrollToBottom();
 
                     // Show typing indicator
-                    this.messages.push({ sender: 'AI Notes Assistant', text: '', is_ai: true, is_streaming: true });
+                    this.messages.push({ sender: 'AI Library Assistant', text: '', is_ai: true, is_streaming: true });
                     this.scrollToBottom();
 
                     try {
-                        const response = await QuantumAPI.chatNotes(userMsg);
+                        const response = await QuantumAPI.chatLibrary(userMsg);
                         
                         // Remove typing indicator
                         this.messages.pop();
                         
                         // Add final response
-                        this.messages.push({ sender: 'AI Notes Assistant', text: response.reply || "Done.", is_ai: true });
+                        this.messages.push({ sender: 'AI Library Assistant', text: response.reply || "Done.", is_ai: true });
                     } catch (err) {
                         this.messages.pop();
-                        this.messages.push({ sender: 'System', text: 'Error fetching notes: ' + err.message, is_ai: true });
+                        this.messages.push({ sender: 'System', text: 'Error fetching library explanation: ' + err.message, is_ai: true });
                     }
                     
                     this.isWaiting = false;
