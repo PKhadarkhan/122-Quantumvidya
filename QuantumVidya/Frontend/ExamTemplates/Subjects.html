@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/TrStudent.css')}}">
+    <title>Admin Dashboard - Subjects</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <i class='bx bxs-smile'></i>
+            <span class="text">Admin Dashboard</span>
+        </a>
+        <ul class="side-menu top">
+            <li>
+                <a href="{{url_for('adminStudents')}}">
+                    <i class='bx bxs-group' ></i>
+                    <span class="text">Students</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="{{url_for('adminSubjects')}}">
+                    <i class='bx bxs-book' ></i>
+                    <span class="text">Subjects</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{url_for('adminQuestions')}}">
+                    <i class='bx bxs-message-square-dots' ></i>
+                    <span class="text">Questions</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{url_for('adminResults')}}">
+                    <i class='bx bxs-graduation' ></i>
+                    <span class="text">Exam Results</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{url_for('logout')}}">
+                    <i class='bx bxs-log-out-circle' ></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <section id="content">
+        <nav>
+            <i class='bx bx-menu' ></i>
+            <span class="text">The Online Exam Proctor</span>
+        </nav>
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Dashboard</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="#">Dashboard</a></li>
+                        <li><i class='bx bx-chevron-right' ></i></li>
+                        <li><a class="active" href="#">Subjects</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="table-data">
+                <div class="record">
+                    <div class="head">
+                        <h3>Subject Records</h3>
+                        <button class="btn-download" data-toggle="modal" data-target="#myModal">
+                            <i class='bx bxs-plus-circle' id="circle"></i>
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Timer (Seconds)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in subjects %}
+                            <tr>
+                                <td>{{row.0}}</td>
+                                <td>{{row.1}}</td>
+                                <td>{{row.3}}</td>
+                                <td>{{row.2}}</td>
+                                <td>
+                                    <a href="#" data-toggle="modal" data-target="#modaledit{{row.0}}">
+                                        <i class='bx bxs-edit' style="color: #5f9ea0;"></i>
+                                    </a>
+                                    <a href="/deleteSubject/{{ row.0 }}" onclick="return confirm('Are You Sure For Delete?')">
+                                        <i class='bx bxs-message-square-x' style="color: #aa2e49;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <div id="modaledit{{row.0}}" class="modal fade" role="dialog">
+                               <div class="modal-dialog">
+                                  <div class="modal-content">
+                                     <div class="modal-header">
+                                        <h4 class="modal-title">Update Information</h4>
+                                     </div>
+                                     <div class="modal-body">
+                                        <form action="{{url_for('updateSubject')}}" method="POST">
+                                           <div class="form-group">
+                                              <label>Name:</label>
+                                              <input type="hidden" name="id" value="{{row.0}}">
+                                              <input type="text" class="form-control" name="name" value="{{row.1}}" required>
+                                           </div>
+                                           <div class="form-group">
+                                              <label>Timer (Seconds):</label>
+                                              <input type="number" class="form-control" name="timer" value="{{row.2}}" required>
+                                           </div>
+                                           <div class="form-group">
+                                              <label>Department:</label>
+                                              <select class="form-control" name="department" required>
+                                                <option value="Computer" {% if row.3 == 'Computer' %}selected{% endif %}>Computer</option>
+                                                <option value="Electrical" {% if row.3 == 'Electrical' %}selected{% endif %}>Electrical</option>
+                                                <option value="ECE" {% if row.3 == 'ECE' %}selected{% endif %}>ECE</option>
+                                                <option value="Mechanical" {% if row.3 == 'Mechanical' %}selected{% endif %}>Mechanical</option>
+                                                <option value="Civil" {% if row.3 == 'Civil' %}selected{% endif %}>Civil</option>
+                                                <option value="Aerospace" {% if row.3 == 'Aerospace' %}selected{% endif %}>Aerospace</option>
+                                                <option value="Chemical" {% if row.3 == 'Chemical' %}selected{% endif %}>Chemical</option>
+                                                <option value="Biomedical" {% if row.3 == 'Biomedical' %}selected{% endif %}>Biomedical</option>
+                                                <option value="Information Technology" {% if row.3 == 'Information Technology' %}selected{% endif %}>Information Technology</option>
+                                                <option value="Metallurgical" {% if row.3 == 'Metallurgical' %}selected{% endif %}>Metallurgical</option>
+                                                <option value="Mechatronics" {% if row.3 == 'Mechatronics' %}selected{% endif %}>Mechatronics</option>
+                                                <option value="Instrumentation" {% if row.3 == 'Instrumentation' %}selected{% endif %}>Instrumentation</option>
+                                                <option value="Production" {% if row.3 == 'Production' %}selected{% endif %}>Production</option>
+                                                <option value="Marine" {% if row.3 == 'Marine' %}selected{% endif %}>Marine</option>
+                                                <option value="Mining" {% if row.3 == 'Mining' %}selected{% endif %}>Mining</option>
+                                              </select>
+                                           </div>
+                                           <div class="form-group">
+                                              <button class="btn"  type="submit">Update</button>
+                                           </div>
+                                        </form>
+                                     </div>
+                                     <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <div id="myModal" class="modal fade" role="dialog">
+       <div class="modal-dialog">
+          <div class="modal-content">
+             <div class="modal-header">
+                <h4 class="modal-title">Add New Subject</h4>
+             </div>
+             <div class="modal-body">
+                <form action="{{ url_for('insertSubject') }}" method="POST">
+                   <div class="form-group">
+                      <label>Name:</label>
+                      <input type="text" class="form-control" name="name" required>
+                   </div>
+                   <div class="form-group">
+                      <label>Timer (Seconds):</label>
+                      <input type="number" class="form-control" name="timer" required>
+                   </div>
+                   <div class="form-group">
+                      <label>Department:</label>
+                      <select class="form-control" name="department" required>
+                        <option value="Computer">Computer</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="ECE">ECE</option>
+                        <option value="Mechanical">Mechanical</option>
+                        <option value="Civil">Civil</option>
+                        <option value="Aerospace">Aerospace</option>
+                        <option value="Chemical">Chemical</option>
+                        <option value="Biomedical">Biomedical</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="Metallurgical">Metallurgical</option>
+                        <option value="Mechatronics">Mechatronics</option>
+                        <option value="Instrumentation">Instrumentation</option>
+                        <option value="Production">Production</option>
+                        <option value="Marine">Marine</option>
+                        <option value="Mining">Mining</option>
+                      </select>
+                   </div>
+                   <div class="form-group" >
+                      <button class="btn"  type="submit">Add</button>
+                   </div>
+                </form>
+             </div>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+             </div>
+          </div>
+       </div>
+    </div>
+</body>
+</html>

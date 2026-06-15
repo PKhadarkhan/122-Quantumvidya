@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard | Quantum Vidya</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <nav class="navbar scrolled flex-between container">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">Q</div>
+            Quantum Vidya
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="teacher-dashboard.html" class="active">Dashboard</a></li>
+            <li><button class="btn-ghost" onclick="logout()">Logout</button></li>
+        </ul>
+    </nav>
+
+    <main class="container page-container animate-fade-in">
+        <h1 class="text-gradient">Teacher Dashboard</h1>
+        <p>Monitor your students' performance, activity, and progress.</p>
+
+        <div class="grid-2" style="margin-top: 40px; margin-bottom: 40px;">
+            <div class="glass-card delay-100 animate-fade-in">
+                <h3>👥 Total Students</h3>
+                <div class="metric-value">124</div>
+            </div>
+
+            <div class="glass-card delay-200 animate-fade-in">
+                <h3>📝 Exams Conducted</h3>
+                <div class="metric-value">8</div>
+            </div>
+
+            <div class="glass-card delay-300 animate-fade-in">
+                <h3>📈 Average Score</h3>
+                <div class="metric-value">76%</div>
+            </div>
+
+            <div class="glass-card delay-300 animate-fade-in">
+                <h3>⚠️ At-Risk Students</h3>
+                <div class="metric-value" style="color: #ff5555;">12</div>
+            </div>
+        </div>
+
+        <div class="grid-2" style="margin-bottom: 40px;">
+            <div class="glass-card animate-fade-in delay-200">
+                <h3 class="text-gradient" style="margin-bottom: 24px;">Average Scores (Weekly)</h3>
+                <canvas id="scoresChart"></canvas>
+            </div>
+            
+            <div class="glass-card animate-fade-in delay-300">
+                <h3 class="text-gradient" style="margin-bottom: 24px;">Student Mastery Distribution</h3>
+                <div style="width: 80%; margin: 0 auto;">
+                    <canvas id="masteryChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card animate-fade-in delay-300">
+            <h2 class="text-gradient" style="margin-bottom: 24px;">Recent Student Activity</h2>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Subject</th>
+                            <th>Recent Score</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alice Johnson</td>
+                            <td>Database Management Systems</td>
+                            <td>85%</td>
+                            <td><span class="status-pill success">Excellent</span></td>
+                        </tr>
+                        <tr>
+                            <td>Bob Smith</td>
+                            <td>Operating Systems</td>
+                            <td>72%</td>
+                            <td><span class="status-pill warning">Good</span></td>
+                        </tr>
+                        <tr>
+                            <td>Charlie Brown</td>
+                            <td>Artificial Intelligence</td>
+                            <td>95%</td>
+                            <td><span class="status-pill success">Excellent</span></td>
+                        </tr>
+                        <tr>
+                            <td>David Wilson</td>
+                            <td>Computer Networks</td>
+                            <td>45%</td>
+                            <td><span class="status-pill danger" style="color: #ff5555;">Needs Review</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <footer style="text-align: center; margin-top: 80px; padding-bottom: 20px; color: var(--text-muted);">
+        <p>© 2026 Quantum Vidya · Learn · Evolve · Lead</p>
+    </footer>
+
+    <script>
+        function logout() {
+            localStorage.removeItem("currentUser");
+            window.location.href = 'index.html';
+        }
+
+        // Chart Config
+        const chartOptions = {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#f0f8f8', font: { family: 'Inter' } } }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#8ab6b9' } },
+                x: { grid: { display: false }, ticks: { color: '#8ab6b9' } }
+            }
+        };
+
+        const ctxScores = document.getElementById('scoresChart').getContext('2d');
+        new Chart(ctxScores, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+                datasets: [{
+                    label: 'Avg Score (%)',
+                    data: [65, 68, 72, 75, 76],
+                    borderColor: '#0fb2be',
+                    backgroundColor: 'rgba(15, 178, 190, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: chartOptions
+        });
+
+        const ctxMastery = document.getElementById('masteryChart').getContext('2d');
+        new Chart(ctxMastery, {
+            type: 'doughnut',
+            data: {
+                labels: ['Excellent', 'Good', 'Average', 'Needs Review'],
+                datasets: [{
+                    data: [40, 35, 15, 10],
+                    backgroundColor: ['#0fb2be', '#17d0da', '#ffb03b', '#ff5555'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#f0f8f8', font: { family: 'Inter' } } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

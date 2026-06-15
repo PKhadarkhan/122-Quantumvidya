@@ -1,0 +1,322 @@
+[
+    {
+        "Id": 1,
+        "Name": "Student 1 (Computer)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 59,
+        "Link": "Student_059Profile.jpg"
+    },
+    {
+        "Id": 2,
+        "Name": "Student 1 (Computer)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 59,
+        "Link": "Student_059Profile.jpg"
+    },
+    {
+        "Id": 3,
+        "Name": "Student 2 (Electrical)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 60,
+        "Link": "Student_060Profile.jpg"
+    },
+    {
+        "Id": 4,
+        "Name": "Student 2 (Electrical)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 60,
+        "Link": "Student_060Profile.jpg"
+    },
+    {
+        "Id": 5,
+        "Name": "Student 3 (ECE)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 61,
+        "Link": "Student_061Profile.jpg"
+    },
+    {
+        "Id": 6,
+        "Name": "Student 3 (ECE)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 61,
+        "Link": "Student_061Profile.jpg"
+    },
+    {
+        "Id": 7,
+        "Name": "Student 4 (Mechanical)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 62,
+        "Link": "Student_062Profile.jpg"
+    },
+    {
+        "Id": 8,
+        "Name": "Student 4 (Mechanical)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 62,
+        "Link": "Student_062Profile.jpg"
+    },
+    {
+        "Id": 9,
+        "Name": "Student 5 (Civil)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 63,
+        "Link": "Student_063Profile.jpg"
+    },
+    {
+        "Id": 10,
+        "Name": "Student 5 (Civil)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 63,
+        "Link": "Student_063Profile.jpg"
+    },
+    {
+        "Id": 11,
+        "Name": "Student 6 (Aerospace)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 64,
+        "Link": "Student_064Profile.jpg"
+    },
+    {
+        "Id": 12,
+        "Name": "Student 6 (Aerospace)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 64,
+        "Link": "Student_064Profile.jpg"
+    },
+    {
+        "Id": 13,
+        "Name": "Student 7 (Chemical)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 65,
+        "Link": "Student_065Profile.jpg"
+    },
+    {
+        "Id": 14,
+        "Name": "Student 7 (Chemical)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 65,
+        "Link": "Student_065Profile.jpg"
+    },
+    {
+        "Id": 15,
+        "Name": "Student 8 (Biomedical)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 66,
+        "Link": "Student_066Profile.jpg"
+    },
+    {
+        "Id": 16,
+        "Name": "Student 8 (Biomedical)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 66,
+        "Link": "Student_066Profile.jpg"
+    },
+    {
+        "Id": 17,
+        "Name": "Student 9 (Information Technology)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 67,
+        "Link": "Student_067Profile.jpg"
+    },
+    {
+        "Id": 18,
+        "Name": "Student 9 (Information Technology)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 67,
+        "Link": "Student_067Profile.jpg"
+    },
+    {
+        "Id": 19,
+        "Name": "Student 10 (Metallurgical)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 68,
+        "Link": "Student_068Profile.jpg"
+    },
+    {
+        "Id": 20,
+        "Name": "Student 10 (Metallurgical)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 68,
+        "Link": "Student_068Profile.jpg"
+    },
+    {
+        "Id": 21,
+        "Name": "Student 11 (Mechatronics)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 69,
+        "Link": "Student_069Profile.jpg"
+    },
+    {
+        "Id": 22,
+        "Name": "Student 11 (Mechatronics)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 69,
+        "Link": "Student_069Profile.jpg"
+    },
+    {
+        "Id": 23,
+        "Name": "Student 12 (Instrumentation)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 70,
+        "Link": "Student_070Profile.jpg"
+    },
+    {
+        "Id": 24,
+        "Name": "Student 12 (Instrumentation)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 70,
+        "Link": "Student_070Profile.jpg"
+    },
+    {
+        "Id": 25,
+        "Name": "Student 13 (Production)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 71,
+        "Link": "Student_071Profile.jpg"
+    },
+    {
+        "Id": 26,
+        "Name": "Student 13 (Production)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 71,
+        "Link": "Student_071Profile.jpg"
+    },
+    {
+        "Id": 27,
+        "Name": "Student 14 (Marine)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 72,
+        "Link": "Student_072Profile.jpg"
+    },
+    {
+        "Id": 28,
+        "Name": "Student 14 (Marine)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 72,
+        "Link": "Student_072Profile.jpg"
+    },
+    {
+        "Id": 29,
+        "Name": "Student 15 (Mining)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-14",
+        "StId": 73,
+        "Link": "Student_073Profile.jpg"
+    },
+    {
+        "Id": 30,
+        "Name": "Student 15 (Mining)",
+        "TotalMark": 100,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 73,
+        "Link": "Student_073Profile.jpg"
+    },
+    {
+        "Id": 31,
+        "Name": "khadar khan",
+        "TotalMark": 66,
+        "TrustScore": 100.0,
+        "Status": "Pass",
+        "Date": "2026-06-15",
+        "StId": 74,
+        "Link": "khadar khan_031Profile.jpg"
+    },
+    {
+        "Id": 32,
+        "Name": "khadar khan",
+        "TotalMark": 133,
+        "TrustScore": 0,
+        "Status": "Fail(Cheating)",
+        "Date": "2026-06-15",
+        "StId": 74,
+        "Link": "khadar khan_032Profile.jpg"
+    }
+]

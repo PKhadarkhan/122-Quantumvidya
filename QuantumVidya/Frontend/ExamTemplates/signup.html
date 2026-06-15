@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Registration Form</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/login.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/all.min.css')}}">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+	<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<img class="wave" src="{{url_for('static', filename='img/wave.png')}}">
+	<div class="container">
+		<div class="img">
+			<img src="{{url_for('static', filename='img/bg.png')}}">
+		</div>
+		<div class="login-content">
+			<form action="{{url_for('signup')}}" method="post">
+				<img src="{{url_for('static', filename='img/avatar.svg')}}">
+				<h2 class="title">Create Account</h2>
+                
+                <div class="input-div one">
+                   <div class="i">
+                        <i class="ph-duotone ph-identification-card" style="font-size: 1.5rem;"></i>
+                   </div>
+                   <div class="div">
+                        <h5>Full Name</h5>
+                        <input type="text" class="input" name="name" id="name" required>
+                   </div>
+                </div>
+
+           		<div class="input-div one">
+           		   <div class="i">
+           		   		<i class="ph-duotone ph-envelope" style="font-size: 1.5rem;"></i>
+           		   </div>
+           		   <div class="div">
+           		   		<h5>Email Address</h5>
+           		   		<input type="email" class="input" name="email" id="email" required>
+           		   </div>
+           		</div>
+
+           		<div class="input-div pass">
+           		   <div class="i">
+           		    	<i class="ph-duotone ph-lock-key" style="font-size: 1.5rem;"></i>
+           		   </div>
+           		   <div class="div">
+           		    	<h5>Password</h5>
+           		    	<input type="password" class="input" name="password" id="password" required>
+            	   </div>
+            	</div>
+
+                <div class="input-div pass" style="margin-top: 20px;">
+                   <div class="i">
+                        <i class="ph-duotone ph-users-three" style="font-size: 1.5rem;"></i>
+                   </div>
+                   <div class="div">
+                        <select name="role" class="input" style="outline:none; border:none; background:transparent; font-family:'Poppins', sans-serif; color:#555;" required>
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="STUDENT">Student</option>
+                            <option value="ADMIN">Teacher / Admin</option>
+                        </select>
+                   </div>
+                </div>
+				<div class="input-div pass" style="margin-top: 20px;">
+                   <div class="i">
+                        <i class="ph-duotone ph-buildings" style="font-size: 1.5rem;"></i>
+                   </div>
+                   <div class="div">
+                        <select name="department" class="input" style="outline:none; border:none; background:transparent; font-family:'Poppins', sans-serif; color:#555;" required>
+<option value="" disabled selected>Department (Students Only)</option>
+                            <option value="Computer">Computer</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="ECE">ECE</option>
+                            <option value="Mechanical">Mechanical</option>
+                            <option value="Civil">Civil</option>
+                            <option value="Aerospace">Aerospace</option>
+                            <option value="Chemical">Chemical</option>
+                            <option value="Biomedical">Biomedical</option>
+                            <option value="Information Technology">Information Technology</option>
+                            <option value="Metallurgical">Metallurgical</option>
+                            <option value="Mechatronics">Mechatronics</option>
+                            <option value="Instrumentation">Instrumentation</option>
+                            <option value="Production">Production</option>
+                            <option value="Marine">Marine</option>
+                            <option value="Mining">Mining</option>
+                        </select>
+                   </div>
+                </div>
+				<br>
+				{% with messages = get_flashed_messages() %}
+					{% if messages %}
+						{% for message in messages %}
+				<h6 class="error">{{ message }}</h6>
+						{% endfor %}
+					{% endif %}
+				{% endwith %}
+
+            	<input type="submit" class="btn" value="Sign Up">
+				<a href="{{url_for('main')}}" class="btn" style="display: block; text-align: center; text-decoration: none; line-height: 50px; background: #5f9ea0;">Back to Login</a>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="{{url_for('static', filename='js/login.js')}}"></script>
+
+        <script>
+            document.querySelector('select[name="role"]').addEventListener('change', function() {
+                const deptDiv = document.querySelector('select[name="department"]').closest('.input-div');
+                if(this.value === 'STUDENT') {
+                    deptDiv.style.display = 'flex';
+                    document.querySelector('select[name="department"]').required = true;
+                } else {
+                    deptDiv.style.display = 'none';
+                    document.querySelector('select[name="department"]').required = false;
+                    document.querySelector('select[name="department"]').value = '';
+                }
+            });
+            // trigger on load
+            document.querySelector('select[name="role"]').dispatchEvent(new Event('change'));
+        </script>
+        
+</body>
+</html>

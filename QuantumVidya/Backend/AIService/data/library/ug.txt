@@ -1,0 +1,3 @@
+DBMS includes SQL, normalization, transactions.
+Operating systems manage processes, memory and scheduling.
+Computer networks handle communication protocols.

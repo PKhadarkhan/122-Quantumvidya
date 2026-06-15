@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nero Chat - Gemma AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .glass-message-user {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .glass-message-ai {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #f1f5f9;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .prose pre {
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .prose code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.875rem;
+            color: #e2e8f0;
+        }
+
+        .prose p {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .prose h1,
+        .prose h2,
+        .prose h3 {
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .prose a {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body class="text-gray-800">
+
+    <div class="glass-container w-full max-w-4xl h-[90vh] rounded-3xl flex flex-col overflow-hidden relative"
+        x-data="chatApp()">
+
+        <!-- Header -->
+        <div class="p-6 border-b border-white/20 flex justify-between items-center transition-all duration-300">
+            <h1 class="text-2xl font-bold text-white tracking-wide">Nero Chat <span
+                    class="text-sm font-light text-indigo-200 ml-2">Gemma 3 4B</span></h1>
+            <div>
+                <span class="inline-flex h-3 w-3 rounded-full"
+                    :class="connected ? 'bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.8)]' : 'bg-red-400'"></span>
+            </div>
+        </div>
+
+        <!-- Chat Box -->
+        <div class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar" id="messages-container" x-ref="messagesBox">
+
+            <template x-for="(msg, index) in messages" :key="index">
+                <div class="flex flex-col" :class="msg.is_ai ? 'items-start' : 'items-end'">
+                    <div class="text-xs text-white/60 mb-1 px-1" x-text="msg.sender"></div>
+                    <div class="max-w-[80%] rounded-2xl p-4 shadow-sm relative overflow-hidden transition-all duration-300 transform scale-100"
+                        :class="msg.is_ai ? 'glass-message-ai rounded-tl-none' : 'glass-message-user rounded-tr-none text-white'">
+                        <div class="prose prose-invert max-w-none text-sm" x-html="renderMarkdown(msg.text)"></div>
+
+                        <!-- Typing Indicator for Streaming -->
+                        <template x-if="msg.is_ai && msg.is_streaming">
+                            <span class="inline-flex ml-2 space-x-1 items-center">
+                                <span class="w-1.5 h-1.5 bg-white/60 rounded-full animate-bounce"></span>
+                                <span class="w-1.5 h-1.5 bg-white/60 rounded-full animate-bounce"
+                                    style="animation-delay: 0.2s"></span>
+                                <span class="w-1.5 h-1.5 bg-white/60 rounded-full animate-bounce"
+                                    style="animation-delay: 0.4s"></span>
+                            </span>
+                        </template>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-4 border-t border-white/20 bg-black/10">
+            <form @submit.prevent="sendMessage" class="relative flex items-center">
+                <input x-model="newMessage" type="text" placeholder="Message Gemma..."
+                    class="w-full bg-white/10 text-white placeholder-white/50 border border-white/20 rounded-full px-6 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:bg-white/20 transition-all duration-300">
+                <button type="submit"
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-indigo-500 hover:bg-indigo-400 text-white rounded-full p-2.5 transition-colors focus:outline-none disabled:opacity-50 shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rotate-90" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function chatApp() {
+            return {
+                messages: [],
+                newMessage: '',
+                socket: null,
+                connected: false,
+                isWaiting: false,
+
+                init() {
+                    this.connect();
+                },
+
+                connect() {
+                    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                    this.socket = new WebSocket(`${protocol}//${window.location.host}/ws/chat/`);
+
+                    this.socket.onopen = () => {
+                        this.connected = true;
+                    };
+
+                    this.socket.onmessage = (e) => {
+                        const data = JSON.parse(e.data);
+
+                        if (!data.is_stream && data.done) {
+                            // Stream finished
+                            this.isWaiting = false;
+                            if (this.messages.length > 0 && this.messages[this.messages.length - 1].is_ai) {
+                                this.messages[this.messages.length - 1].is_streaming = false;
+                            }
+                        } else if (data.is_stream) {
+                            // Handle streaming chunk
+                            const lastMsg = this.messages[this.messages.length - 1];
+                            if (lastMsg && lastMsg.is_ai && lastMsg.is_streaming) {
+                                lastMsg.text += data.text;
+                            } else {
+                                // First chunk
+                                this.messages.push({
+                                    sender: data.sender || 'Gemma',
+                                    text: data.text,
+                                    is_ai: true,
+                                    is_streaming: true
+                                });
+                            }
+                        } else {
+                            // Normal message (initial load or user echo)
+                            // If it's a history load but the server sends it separately
+                            this.messages.push({
+                                sender: data.sender,
+                                text: data.text,
+                                is_ai: data.is_ai,
+                                is_streaming: false
+                            });
+
+                            if (!data.is_ai) {
+                                // We just received our own echo, AI is now thinking
+                                this.isWaiting = true;
+                            }
+                        }
+
+                        this.scrollToBottom();
+                    };
+
+                    this.socket.onclose = () => {
+                        this.connected = false;
+                        setTimeout(() => this.connect(), 3000); // Reconnect
+                    };
+                },
+
+                sendMessage() {
+                    if (!this.newMessage.trim() || !this.connected) return;
+
+                    this.socket.send(JSON.stringify({
+                        'message': this.newMessage
+                    }));
+
+                    this.newMessage = '';
+                },
+
+                scrollToBottom() {
+                    setTimeout(() => {
+                        if (this.$refs.messagesBox) {
+                            this.$refs.messagesBox.scrollTop = this.$refs.messagesBox.scrollHeight;
+                        }
+                    }, 50);
+                },
+
+                renderMarkdown(text) {
+                    if (!text) return '';
+                    // marked.parse renders markdown to HTML safely
+                    return marked.parse(text);
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
