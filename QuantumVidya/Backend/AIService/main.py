@@ -234,5 +234,5 @@ def api_login(user: UserLogin):
 
 
 # =================== FRONTEND STATIC FILES (must be last) ===================
-frontend_path = os.path.join(os.path.dirname(__file__), "..", "frontend")
+frontend_path = os.path.join(os.path.dirname(__file__), "..", "..", "Frontend", "PublicPages")
 app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")

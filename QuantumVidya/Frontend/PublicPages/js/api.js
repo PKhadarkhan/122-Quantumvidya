@@ -1,9 +1,9 @@
 // Quantum API Service
 // Handles all communication with the FastAPI backend
 
-const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://localhost:8080'
-    : ''; // Empty means relative to the same origin in production
+// We hardcode the API URL to 127.0.0.1 so that even if the frontend is hosted on GitHub Pages,
+// it will route the AI requests directly to the local Python backend running on your machine.
+const API_BASE_URL = 'http://127.0.0.1:8080';
 
 window.QuantumAPI = {
 
