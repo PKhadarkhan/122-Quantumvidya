@@ -7,6 +7,4 @@ sentence-transformers
 python-docx
 requests
 langchain-ollama
-langchain-openai
-python-dotenv
 python-multipart

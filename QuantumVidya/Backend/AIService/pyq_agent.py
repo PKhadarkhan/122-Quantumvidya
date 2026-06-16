@@ -1,6 +1,6 @@
-from langchain_openai import ChatOpenAI
+from langchain_ollama import OllamaLLM
 
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.4)
+llm = OllamaLLM(model="llama3.2", temperature=0.4, num_predict=1000)
 
 async def generate_pyq(course, subject):
     prompt = f"""

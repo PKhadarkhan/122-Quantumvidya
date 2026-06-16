@@ -2,7 +2,7 @@ import json
 import aiohttp
 
 OLLAMA_API_URL = "http://localhost:11434/api/chat"
-MODEL_NAME = "gemma3:4b"  
+MODEL_NAME = "llama3.2"  
 
 async def generate_agent_response(history):
     """

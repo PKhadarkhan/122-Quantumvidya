@@ -1,12 +1,13 @@
-from langchain_openai import ChatOpenAI
+from langchain_ollama import OllamaLLM
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 import os
 
-# Advanced Model with generous timeout for OpenAI
-llm = ChatOpenAI(
-    model="gpt-4o-mini",
-    temperature=0.3
+# Advanced Model with generous timeout for local LLM
+llm = OllamaLLM(
+    model="llama3.2",
+    temperature=0.3,
+    num_predict=800
 )
 
 DB_DIR = os.path.join(os.path.dirname(__file__), "chroma_db")

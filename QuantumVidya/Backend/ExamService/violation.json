@@ -198,5 +198,13 @@
         "Mark": 117.0,
         "Link": "",
         "RId": 32
+    },
+    {
+        "Name": "Prohibited Shorcuts () are detected.",
+        "Time": "0 Counts",
+        "Duration": "",
+        "Mark": 0.0,
+        "Link": "",
+        "RId": 33
     }
 ]

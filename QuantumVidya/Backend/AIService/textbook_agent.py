@@ -1,6 +1,6 @@
-from langchain_openai import ChatOpenAI
+from langchain_ollama import OllamaLLM
 
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.3)
+llm = OllamaLLM(model="llama3.2", temperature=0.3, num_predict=1500)
 
 async def generate_textbook(level, course, subject):
     prompt = f"""
